@@ -1,0 +1,35 @@
+Install mysql on your system.
+https://dev.mysql.com/doc/refman/8.0/en/installing.html
+
+Import the sql script - import.sql
+
+I am not sure how to setup phpmyadmin
+
+----------------------------
+Install node.js on your system.
+
+To check if node is already on your system, type: node -v 
+on your command prompt/terminal.
+
+Change directory to the directory with package.json and type: npm install
+It will install all the dependencies eg, express, ejs
+
+Type: npm run watch
+
+You should see ‘Express is running on port 3000!’
+Connected to database
+http://localhost:3000 should serve a page with styled with bootstrap
+
+----------------------------
+Issue with npm mysql package, used mysql2 packaged instead
+
+code: 'ER_NOT_SUPPORTED_AUTH_MODE',
+  errno: 1251,
+  sqlMessage: 'Client does not support authentication protocol requested by server; consider upgrading MySQL client',
+  sqlState: '08004',
+  fatal: true
+------------------------------
+
+Resources
+https://www.sitepoint.com/build-simple-beginner-app-node-bootstrap-mongodb/
+> I followed this page to implement nodemon and separated the connection and server setup to app.js and start.js
