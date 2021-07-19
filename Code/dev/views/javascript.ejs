@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <%- include ("partials/head.ejs") -%>
+    
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="col-md-12 py-5 px-3 mx-auto">
+        <%- include ("partials/nav.ejs") -%>
+  
+        <div class ="row">
+          <div class="col-lg-2 px-0">
+            <h2>Secondary NAV</h2>
+          </div>
+        <div class="col-lg-8 px-0">
+          <h2 class="text-align-center">Language: Javascript</h2>
+          <p class="lead">All code snippets</p>
+          <button type="button" class="btn btn-info btn-sm">Front End</button>
+          <button type="button" class="btn btn-info btn-sm">Back End</button>
+          <button type="button" class="btn btn-info btn-sm">Node JS</button>
+        
+  
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Votes</th>
+                <th scope="col">Code</th>
+                <th scope="col">Contributed By</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">100</th>
+                <td>Code snippet can go here</td>
+                <td>js_warrior_26</td>
+                <td>Lorem ipsum</td>
+                <td> 
+                  <button type="button" class="btn btn-primary btn-sm">View</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">100</th>
+                <td>Code snippet can go here</td>
+                <td>js_warrior_26</td>
+                <td>Lorem ipsum</td>
+                <td> 
+                  <button type="button" class="btn btn-primary btn-sm">View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+  
+  
+        <%- include ("partials/footer.ejs") -%>
+      </div>
+    </div>
+
+  </body>
+
+</html>

@@ -14,16 +14,7 @@ app.engine("html", require("ejs").renderFile);
 //for express to reference to public folder for static files
 app.use(express.static(__dirname + "/public"));
 
-//for express to reference to bootstrap
-app.use(
-    "/css",
-    express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
-)
-app.use(
-    "/js",
-    express.static(path.join(__dirname, "node_modules/bootstrap/dist/js"))
-)
-  
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', routes);
 
