@@ -12,8 +12,8 @@ require("./routes/main")(app);
 
 //establish db connection
 const db = mysql.createConnection ({ host: "localhost",
-  user: "test",
-  password: "newpassword", //insert password
+  user: "root",
+  password: "", //insert password
   database: "coding_knowledge_db" }); // insert database name
   db.connect((err) => {
   if (err) {

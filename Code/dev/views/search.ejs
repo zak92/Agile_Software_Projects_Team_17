@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <%- include ("partials/head.ejs") -%>
+    
+  </head>
+  <body>
+      <div class = container-fluid>    
+          <div class="col-md-12 py-5 px-3 mx-auto">
+            <%- include ("partials/nav.ejs") -%>
+
+            <h1>Search results</h1>
+
+            <% if (message) { %>
+              <div class="mb-4 lead"><%= message %></div>
+            <% } %>
+
+            <div><%= results %></div>
+
+             <%- include ("partials/footer.ejs") -%>
+
+    </div></div>
+
+  </body>
