@@ -45,9 +45,36 @@ router.get("/search",function(req, res){
   });
 });
 
+router.get("/ranking",function(req,res){
 
+  let sql1 = 'SELECT  (@rank:= @rank + 1) AS rank_no, a.* FROM (SELECT username, contribution, upvotes, ROUND(upvotes*0.5 + contribution*0.5,0) AS score FROM (SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages) AS records GROUP BY fk_user_id) AS total LEFT JOIN users ON user_id = fk_user_id ORDER BY score DESC) AS a , (SELECT @rank:= 0) AS b LIMIT 5'
 
+  db.query(sql1,function(error,results){
+    if(error){
+      res.render("progress");
+      return;
+    }
 
+    if(results.length <= 0) {
+      res.render("ranking",{
+        title: "User Rankings",
+        message: "No data",
+        results: []
+      });
+      return;
+    }
+
+    let data = results.map(result => {
+      return Object.values(result)
+    })
+
+    res.render("ranking", {
+      title: "User Rankings",
+      message: false,
+      results: data
+    });
+  });
+});
 
 
 // --------------------------------------------------------------------------------------------------

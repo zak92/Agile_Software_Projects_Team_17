@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <%- include ("partials/head.ejs") -%>
+    
+  </head>
+
+  <body>
+    <div class = "container-fluid">
+      <div class="col-md-12 py-5 px-3">
+        <%- include ("partials/nav.ejs") -%>
+  
+        <div class="col-md-8 offset-md-2">
+          <h2 class=" text-center">User Rankings</h2>
+
+          <table class="table table-striped table-bordered m-3 text-center">
+            <caption class="text-center" style="caption-side: top;">(Score = 50% * Contribution + 50% * Upvotes)</caption>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>User</th>
+                <th>Contribution</th>
+                <th>Upvotes</th>
+                <th>Score(Rounding)</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% results.forEach(function(item){ %> 
+                <tr>
+                  <td><%=item[0] %></td>
+                  <td><%=item[1] %></td>
+                  <td><%=item[2] %></td>
+                  <td><%=item[3] %></td>
+                  <td><%=item[4] %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+
+          <% if(message) { %>
+            <p class="text-center"><%=message %></p>
+          <% } %>
+
+        </div>
+        
+        <%- include ("partials/footer.ejs") -%>
+      </div>
+    </div>
+    
+
+  </body>
+
+</html>
