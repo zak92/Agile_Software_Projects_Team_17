@@ -2,6 +2,7 @@ Install mysql on your system.
 https://dev.mysql.com/doc/refman/8.0/en/installing.html
 
 Import the sql script - import.sql
+**included insert-data.sql for some default data**
 
 I am not sure how to setup phpmyadmin
 
