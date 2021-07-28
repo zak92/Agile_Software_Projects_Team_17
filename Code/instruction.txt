@@ -16,7 +16,7 @@ You should see ‘Express is running on port 3000!’
 Connected to database
 http://localhost:3000 should serve a page with styled with bootstrap
 
-
+---------------------
 Resources
 https://www.sitepoint.com/build-simple-beginner-app-node-bootstrap-mongodb/
 > I followed this page to implement nodemon and separated the connection and server setup to app.js and start.js
