@@ -1,0 +1,82 @@
+
+
+CREATE TABLE IF NOT EXISTS tools ( 
+        tool_id INTEGER PRIMARY KEY,
+        fk_user_id INTEGER,
+        tool TEXT NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        code_snippet BLOB,
+        tags BLOB,
+        upvotes INTEGER,
+        flagged INTEGER,
+        last_update TEXT,
+        FOREIGN KEY (fk_user_id) REFERENCES users (user_id));
+
+CREATE TABLE IF NOT EXISTS languages ( 
+    language_id INTEGER PRIMARY KEY,
+    fk_user_id INTEGER,
+    language TEXT NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT,
+    code_snippet BLOB,
+    tags BLOB,
+    upvotes INTEGER,
+    flagged INTEGER,
+    last_update TEXT,
+    FOREIGN KEY (fk_user_id) REFERENCES users (user_id));
+
+    CREATE TABLE IF NOT EXISTS frameworks ( 
+        framework_id INTEGER PRIMARY KEY,
+        fk_user_id INTEGER,
+        framework TEXT NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        code_snippet BLOB,
+        tags BLOB,
+        upvotes INTEGER,
+        flagged INTEGER,
+        last_update TEXT,
+        FOREIGN KEY (fk_user_id) REFERENCES users (user_id));
+
+INSERT INTO tools (fk_user_id, tool, title, description, code_snippet, tags, upvotes, flagged, last_update)
+    VALUES ("1", "git", "git init", "creates a new Git repository","git init", "CLI, Commands", 0, 0, CURRENT_TIMESTAMP),
+    ("1", "git", "git pull", "used to fetch and download content from a remote repository and immediately update the local repository to match that content","git pull", "CLI, Commands", 0, 0, CURRENT_TIMESTAMP),
+    ("1", "bash", "list local directories", "list the folders and files within the current directory","ls", "CLI, Commands", 0, 0, CURRENT_TIMESTAMP),
+    ("1", "bash", "create new folder", "create a new folder in currect directory","mkdir [option(s)] directory_name(s)", "CLI, Commands", 0, 0, CURRENT_TIMESTAMP)
+
+INSERT INTO frameworks (fk_user_id, framework, title, description, code_snippet, tags, upvotes, flagged, last_update) 
+VALUES ("1", "nodeJS", "create a HTTP server", "uses the node's http module to setup a simple web server","var http = require('http');http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end('Hello World!');
+}).listen(8080);", "Javascript, nodeJS", 0, 0, CURRENT_TIMESTAMP),
+("1", 
+"django",
+ "django built-in user authentication module", 
+ "This code snipplet enable you to configure the django user authentication module to create new user for your application by extending the default django user model",
+"class AppUser(models.Model):
+
+    //one to one mapping of users from app user to default django user
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    //app level unique field.
+    organisation = models.CharField(max_length=256, null=True, blank=True)
+
+    //reference back to original model
+    def __unicode__(self):
+        return self.user.username", 
+	"python, django",
+	0, 
+	0, 
+	CURRENT_TIMESTAMP);
+
+
+INSERT INTO languages (fk_user_id, language, title, description, code_snippet, tags, upvotes, flagged, last_update) VALUES (
+    '1', 'python', 'merge 2 dictionary datatype', 'this is how you merge 2 dictionary datatype',
+    'dictionary1 = {'name': 'Joy', 'age': 25}
+    dictionary2 = {'name': 'Joy', 'city': 'New York'}
+    
+    merged_dict = {**dictionary1, **dictionary2}
+    
+    print('Merged dictionary:', merged_dict)', 'python, datatype, dictionary, common function', 0, 0, CURRENT_TIMESTAMP);
+    
