@@ -1,11 +1,6 @@
-Install mysql on your system.
-https://dev.mysql.com/doc/refman/8.0/en/installing.html
-
-Import the sql script - import.sql
-**included insert-data.sql for some default data**
-
-I am not sure how to setup phpmyadmin
-
+****LATEST*****
+SQLITE3, need not setup or install any software. But for a GUI view, similar to phpmyadmin, you can download this https://sqlitebrowser.org/
+https://www.sqlitetutorial.net/sqlite-nodejs/insert/
 ----------------------------
 Install node.js on your system.
 
@@ -21,15 +16,6 @@ You should see ‘Express is running on port 3000!’
 Connected to database
 http://localhost:3000 should serve a page with styled with bootstrap
 
-----------------------------
-Issue with npm mysql package, used mysql2 packaged instead
-
-code: 'ER_NOT_SUPPORTED_AUTH_MODE',
-  errno: 1251,
-  sqlMessage: 'Client does not support authentication protocol requested by server; consider upgrading MySQL client',
-  sqlState: '08004',
-  fatal: true
-------------------------------
 
 Resources
 https://www.sitepoint.com/build-simple-beginner-app-node-bootstrap-mongodb/
