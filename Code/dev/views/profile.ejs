@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <%- include ("partials/head.ejs") -%>
+    
+  </head>
+
+  <body>
+    <div class = "container-fluid">
+      <div class="col-md-12 py-5 px-3 mx-auto">
+        <%- include ("partials/nav.ejs") -%>
+  
+        <main class="container">
+
+          <div class="grid">
+    
+            <figure>
+              <img src="/images/woman.png" width="128" height="128"/>
+            </figure>
+    
+            <div>
+              <hgroup>
+                <h4><%= user.displayName %></h4>
+                <p><small><%= user.username %></small></p>
+              </hgroup>
+                
+              <% if (user.emails) { %>
+              <p><small>Email: </small><%= user.emails[0].value %></p>
+              <% } %>
+            </div>
+    
+          </div>
+        </main>
+
+  
+        <%- include ("partials/footer.ejs") -%>
+      </div>
+    </div>
+    
+
+  </body>
+
+</html>

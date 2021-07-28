@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <%- include ("partials/head.ejs") -%>
+    
+  </head>
+
+  <body>
+    <div class = "container-fluid">
+      <div class="col-md-12 py-5 px-3 mx-auto">
+        <%- include ("partials/nav.ejs") -%>
+  
+        <main class="">
+      
+            <article class="grid">
+              <div>
+                <hgroup>
+                  <h1>Sign up</h1>
+                </hgroup>
+                <form action="/users" method="post">
+                  <input type="text" name="name" placeholder="Name">
+                  <input type="text" name="username" placeholder="Username">
+                  <input type="email" name="email" placeholder="Email">
+                  <label>User is an admin<input type="radio" name="is_admin" value="1"></label>
+                  <input type="password" name="password" placeholder="Password">
+                  <button type="submit" class="contrast">Sign up</button>
+                </form>
+              </div>
+              <div></div>
+            </article>
+          </main>
+
+  
+        <%- include ("partials/footer.ejs") -%>
+      </div>
+    </div>
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <%- include ("partials/head.ejs") -%>
+    
+  </head>
+
+  <body>
+    <div class = "container-fluid">
+      <div class="col-md-12 py-5 px-3 mx-auto">
+        <%- include ("partials/nav.ejs") -%>
+  
+        <main class="">
+      
+            <article class="grid">
+              <div>
+                <% if (hasMessages) { %>
+                  <ul>
+                  <% messages.forEach(function(message){ %>
+                    <li><%= message %></li>
+                  <% }); %>
+                  </ul>
+                <% } %>
+                
+                <hgroup>
+                  <h1>Sign in</h1>
+                </hgroup>
+                <form action="/login/password" method="post">
+                  <input type="text" name="username" placeholder="Username">
+                  <input type="password" name="password" placeholder="Password">
+                  <button type="submit" class="contrast">Sign in</button>
+                </form>
+              </div>
+              <div></div>
+              <div>
+                or <a href="/users/new">Create an account</a>
+              </div>
+            </article>
+          </main>
+
+  
+        <%- include ("partials/footer.ejs") -%>
+      </div>
+    </div>
+    
+
+  </body>
+
+</html>

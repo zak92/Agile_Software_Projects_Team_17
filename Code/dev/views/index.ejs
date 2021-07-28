@@ -10,7 +10,6 @@
       <div class="col-md-12 py-5 px-3 mx-auto">
         <%- include ("partials/nav.ejs") -%>
   
-        
         <div class="col-lg-8 offset-lg-2 px-0">
           <h2 class="text-align-center">Welcome to THE MOST COMMON WEB APP!</h2>
           <p class="lead">The most common code, commands and methods for developers and engineers at your fingertips</p>
@@ -25,6 +24,7 @@
         <hr class="my-5 w-25 mx-0">
   
         <div class="row">
+          <% if (!user) { %>
           <div class="col-md-6">
             <h2>JOIN OUR COMMUNITY OF DEVELOPERS</h2>
             <p>Become part of the movement of developers and engineers helping each other learn and grow! 
@@ -33,14 +33,14 @@
             </p>
             <p> Not a member? Sign up today!
   
-              Login to start contributing to the community</p>
+              <a href="/login" role="button">Login</a> to start contributing to the community</p>
              
           </div>
-  
+          <% } %>
           <div class="col-md-6">
             <h2>Top 5 User Ranking</h2>
             <p>Read more detailed instructions and documentation on using or contributing to Bootstrap.</p>
-  
+          
           </div>
         </div>
   
