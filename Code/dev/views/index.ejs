@@ -40,7 +40,31 @@
           <div class="col-md-6">
             <h2>Top 5 User Ranking</h2>
             <p>Read more detailed instructions and documentation on using or contributing to Bootstrap.</p>
-          
+            
+            <table class="table table-striped table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>User</th>
+                  <th>Contribution</th>
+                  <th>Upvotes</th>
+                  <th>Score(Rounding)</th>
+                </tr>
+              </thead>
+  
+              <tbody>
+                <% results.forEach(function(item){ %> 
+                  <tr>
+                    <td><%=item[0] %></td>
+                    <td><%=item[1] %></td>
+                    <td><%=item[2] %></td>
+                    <td><%=item[3] %></td>
+                    <td><%=item[4] %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+
           </div>
         </div>
   
