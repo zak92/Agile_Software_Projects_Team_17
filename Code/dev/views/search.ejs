@@ -15,9 +15,43 @@
               <div class="mb-4 lead"><%= message %></div>
             <% } %>
 
-            <div><%= results %></div>
+            <h2>Languages</h2>
+            <%  languages.forEach(function(item){ %> 
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title"><%=item[2] %></h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><%=item[3] %></h6>
+                  <p class="card-text"><%=item[4] %></p>
+                  <a href="<%= item[2] %>"  class="card-link">View</a>
+                </div>
+              </div>
+            <% }) %>
 
-             <%- include ("partials/footer.ejs") -%>
+            <h2>Frameworks</h2>
+            <%  frameworks.forEach(function(item){ %> 
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title"><%=item[2] %></h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><%=item[3] %></h6>
+                  <p class="card-text"><%=item[4] %></p>
+                  <a href="<%= item[2] %>"  class="card-link">View</a>
+                </div>
+              </div>
+            <% }) %>
+
+            <h2>Tools</h2>
+            <%  tools.forEach(function(item){ %> 
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title"><%=item[2] %></h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><%=item[3] %></h6>
+                  <p class="card-text"><%=item[4] %></p>
+                  <a href="<%= item[2] %>"  class="card-link">View</a>
+                </div>
+              </div>
+            <% }) %>
+
+            <%- include ("partials/footer.ejs") -%>
 
     </div></div>
 
