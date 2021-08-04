@@ -49,6 +49,13 @@ router.get("/javascript",function(req, res){
   });
 });
 
+router.get("/addcode",function(req, res){
+  res.render("addcode", {
+    title: "Add CodeSnippets",
+    user: req.user 
+  });
+});
+
 
 router.get("/search", function(req, res){ 
   mainSearch.search(req, res, req.query.search)

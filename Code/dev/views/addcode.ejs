@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <%- include ("partials/head.ejs") -%>
+    
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="col-md-12 py-5 px-3 mx-auto">
+        <%- include ("partials/nav.ejs") -%>
+  
+        <div class ="row">
+          <div class="col-lg-2 px-0">
+          </div>
+        <div class="col-lg-8 px-0">
+          <h2 class="text-align-center">Add code you use commonly!</h2>
+          <p class="lead">choose a tag:</p>
+        <button type="button" class="btn btn-info btn-sm">Front End</button>
+        <button type="button" class="btn btn-info btn-sm">Back End</button>
+        <button type="button" class="btn btn-info btn-sm">Node JS</button>
+        <br>
+          <br>
+          <form action="#" method="post">
+            <fieldset>
+            <div>
+                <label for="name" class="mid">Title of your code entry: </label>
+                <input type="text" name="name" id="name" value="" tabindex="1">
+            </div>
+
+            <div>
+              <label for="name" class="mid">Description of your code:    </label>
+              <input type="text" name="name" id="name" value="" tabindex="1">
+          </div>
+              
+            <div>
+                <label for="textarea">Add your code here:</label>
+                <textarea cols="40" rows="10" name="textarea" id="textarea"></textarea>
+            </div>
+        
+            <div>
+                <input type="button" class="btn btn-info btn-sm" value="Submit" onclick="showData(this.form)">
+            </div>
+              
+            </fieldset>
+        </form>
+      </div>
+      </div>
+  
+  
+        <%- include ("partials/footer.ejs") -%>
+      </div>
+    </div>
+
+  </body>
+
+</html>
