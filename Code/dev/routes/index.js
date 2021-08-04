@@ -63,9 +63,23 @@ router.get("/search", function(req, res){
 
 router.get("/ranking",function(req,res){
 
-  let sql1 = 'SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (SELECT username, IFNULL(contribution, 0), IFNULL(upvotes, 0), IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages) AS records GROUP BY fk_user_id) AS total ON user_id = fk_user_id ORDER BY score DESC) AS a;'
+  //Initialize
+  let currentpage = 1;
+  let itemlimit = 5;
+  let totalpage = 1;
 
-  db.all(sql1,function(error,results){
+
+  if(req.query.currentpage){
+    currentpage = req.query.currentpage;
+  }
+
+  if(req.query.itemlimit){
+    itemlimit = req.query.itemlimit;
+  }
+
+  let sql1 = 'SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (SELECT username, IFNULL(contribution, 0), IFNULL(upvotes, 0), IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages) AS records GROUP BY fk_user_id) AS total ON user_id = fk_user_id ORDER BY score DESC) AS a'
+
+  db.all(sql1, function(error,results){
     if(error){
       res.render("progress", {
         user: req.user
@@ -78,7 +92,10 @@ router.get("/ranking",function(req,res){
         user: req.user,
         title: "User Rankings",
         message: "No data",
-        results: []
+        results: [],
+        totalpage: totalpage,
+        currentpage: currentpage,
+        itemlimit: itemlimit
       });
       return;
     }
@@ -86,12 +103,27 @@ router.get("/ranking",function(req,res){
     let data = results.map(result => {
       return Object.values(result)
     })
+    
+    totalpage = data.length / itemlimit;
+
+    if(data.length % itemlimit != 0 ){
+
+      totalpage = Math.floor(totalpage)+1;
+
+    }
+  
+    let data_pos_start = (currentpage - 1) * itemlimit;
+    let data_pos_end = currentpage * itemlimit;
+    let data_slice = data.slice(data_pos_start,data_pos_end);
 
     res.render("ranking", {
       user: req.user,
       title: "User Rankings",
       message: false,
-      results: data
+      results: data_slice,
+      totalpage: totalpage,
+      currentpage: currentpage,
+      itemlimit: itemlimit
     });
   });
 });

@@ -41,14 +41,47 @@
           <% if(message) { %>
             <p class="text-center"><%=message %></p>
           <% } %>
+          
+          <div class="row">
+            <div class="col-md-4 py-2">
+              <p class="mx-5">A total of <%=totalpage %> pages</p>
+            </div>
 
+            <div class="col-md-4">
+              <ul class="pagination justify-content-center" >
+                <li class="page-item <% if (currentpage == 1) { %> disabled <% }else{ %> active <% } %>  ">
+                  <a  class="page-link" href="/ranking?currentpage=<%-parseInt(currentpage)-1%>&itemlimit=<%-parseInt(itemlimit)%>">&larr; Previous</a>
+                </li>
+                
+                <li class="page-item disabled">
+                  <a class="page-link" >Page <%=currentpage%></a>
+                </li>
+  
+                <li class="page-item <% if (currentpage == totalpage) { %> disabled <% }else{ %> active <% } %> ">
+                  <a class="page-link" href="/ranking?currentpage=<%-parseInt(currentpage)+1%>&itemlimit=<%-parseInt(itemlimit)%>">Next &rarr;</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-md-4">
+              <div class="dropdown">
+                Show
+                <button id="limitBtn" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><%-itemlimit%></button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/ranking?itemlimit=5">5</a>
+                  <a class="dropdown-item" href="/ranking?itemlimit=10">10</a>
+                  <a class="dropdown-item" href="/ranking?itemlimit=15">15</a>
+                </div>
+                entries
+              </div>
+            </div>
+
+          </div>
         </div>
         
         <%- include ("partials/footer.ejs") -%>
       </div>
     </div>
-    
-
   </body>
 
 </html>
