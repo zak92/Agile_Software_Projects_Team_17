@@ -9,7 +9,7 @@ module.exports.ranking = async (req, res) => {
         //Initialize
         let currentpage = 1;
         let itemlimit = 5;
-        let totalpage = 1;
+        let totalpages = 1;
 
         let formattedRankingResults = RankingResults.map(result => {
             return Object.values(result);
@@ -21,7 +21,7 @@ module.exports.ranking = async (req, res) => {
               title: "User Rankings",
               message: "No data",
               results: [],
-              totalpage: totalpage,
+              totalpages: totalpages,
               currentpage: currentpage,
               itemlimit: itemlimit
             });
@@ -29,18 +29,18 @@ module.exports.ranking = async (req, res) => {
         }
         
         if(req.query.currentpage){
-            currentpage = req.query.currentpage;
+            currentpage = parseInt(req.query.currentpage);
         }
     
         if(req.query.itemlimit){
-            itemlimit = req.query.itemlimit;
+            itemlimit = parseInt(req.query.itemlimit);
         }
 
-        totalpage = formattedRankingResults.length / itemlimit;
+        totalpages = formattedRankingResults.length / itemlimit;
 
         if(formattedRankingResults.length % itemlimit != 0 ){
 
-            totalpage = Math.floor(totalpage)+1;
+            totalpages = Math.floor(totalpages)+1;
       
         }
 
@@ -53,7 +53,7 @@ module.exports.ranking = async (req, res) => {
             title: "User Rankings",
             message: false,
             results: data_slice,
-            totalpage: totalpage,
+            totalpages: totalpages,
             currentpage: currentpage,
             itemlimit: itemlimit
           });
@@ -67,7 +67,7 @@ module.exports.ranking = async (req, res) => {
             title: "User Rankings",
             message: "DB ERROR",
             results: [],
-            totalpage: totalpage,
+            totalpages: totalpages,
             currentpage: currentpage,
             itemlimit: itemlimit
           });
@@ -86,7 +86,7 @@ module.exports.mainranking = async(isLimit=false,numLimit)=>{
     if(!numLimit){numLimit = 5;}
 
     if(!isLimit){
-        let sql1 = 'SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (SELECT username, IFNULL(contribution, 0), IFNULL(upvotes, 0), IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages) AS records GROUP BY fk_user_id) AS total ON user_id = fk_user_id ORDER BY score DESC) AS a'
+        let sql1 = 'SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (SELECT username, IFNULL(contribution, 0) AS contribution, IFNULL(upvotes, 0) AS upvotes, IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages) AS records GROUP BY fk_user_id) AS total ON user_id = fk_user_id ORDER BY score DESC) AS a'
     
         return new Promise(function(resolve,reject){
             db.all(sql1,function(err,rows){
@@ -96,7 +96,7 @@ module.exports.mainranking = async(isLimit=false,numLimit)=>{
         });
 
     }else{
-        let sql1 = 'SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (SELECT username, IFNULL(contribution, 0), IFNULL(upvotes, 0), IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages) AS records GROUP BY fk_user_id) AS total ON user_id = fk_user_id ORDER BY score DESC) AS a LIMIT (?)'
+        let sql1 = 'SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (SELECT username, IFNULL(contribution, 0) AS contribution, IFNULL(upvotes, 0) AS upvotes, IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages) AS records GROUP BY fk_user_id) AS total ON user_id = fk_user_id ORDER BY score DESC) AS a LIMIT (?)'
     
         return new Promise(function(resolve,reject){
             db.all(sql1,[numLimit],function(err,rows){
