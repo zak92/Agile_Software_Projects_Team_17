@@ -1,8 +1,8 @@
 ****LATEST*****
 SQLITE3, need not setup or install any software. But for a GUI view, similar to phpmyadmin, you can download this https://sqlitebrowser.org/
-https://www.sqlitetutorial.net/sqlite-nodejs/insert/
+    https://www.sqlitetutorial.net/sqlite-nodejs/insert/
 ----------------------------
-Install node.js on your system.
+Install node.js on your system. [v12.13.1]
 
 To check if node is already on your system, type: node -v 
 on your command prompt/terminal.
@@ -13,7 +13,6 @@ It will install all the dependencies eg, express, ejs
 Type: npm run watch
 
 You should see ‘Express is running on port 3000!’
-Connected to database
 http://localhost:3000 should serve a page with styled with bootstrap
 
 ---------------------
