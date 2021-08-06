@@ -4,6 +4,7 @@ const router = express.Router();
 var db = require('../db');
 var mainSearch = require('../modules/search');
 var Ranking = require('../modules/ranking');
+var view = require('../modules/view');
 
 router.get("/",async function(req, res){
 
@@ -78,11 +79,14 @@ router.get("/",async function(req, res){
   // });
 });
 
-router.get("/javascript",function(req, res){
-  res.render("javascript", {
-    title: "Javascript Snippets",
-    user: req.user 
-  });
+router.get(["/javascript", "/python", "/c%2B%2B"] ,function(req, res){
+  view.viewLang(req,res)
+});
+router.get("/tools",function(req, res){
+  view.viewTools(req,res)
+});
+router.get("/frameworks",function(req, res){
+  view.viewFrameworks(req,res)
 });
 
 router.get("/addcode",function(req, res){
