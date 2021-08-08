@@ -8,7 +8,49 @@
       <div class="col-md-12 py-5 px-3 mx-auto">
         <%- include ("partials/nav.ejs") -%>
 
-        <h1>Search results</h1>
+        <div class="row no-gutters">
+          <h1>Search results</h1>
+          <div class="form-check form-check-inline ml-4">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="inlineCheckbox1"
+              value="option1"
+              data-toggle="collapse"
+              data-target=".multi-collapse-language"
+              href="#languages"
+            />
+            <label class="form-check-label" for="inlineCheckbox1"
+              >languages</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="inlineCheckbox2"
+              value="option2"
+              data-toggle="collapse"
+              href="#frameworks"
+              data-target=".multi-collapse-frameworks"
+            />
+            <label class="form-check-label" for="inlineCheckbox2"
+              >frameworks</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="inlineCheckbox3"
+              value="option3"
+              data-toggle="collapse"
+              href="#tools"
+              data-target=".multi-collapse-tools"
+            />
+            <label class="form-check-label" for="inlineCheckbox3">tools</label>
+          </div>
+        </div>
 
         <% if (message) { %>
         <div class="mb-4 lead"><%= message %></div>
@@ -17,7 +59,17 @@
         <h2>Languages</h2>
         <% languages.forEach(function(item){ %>
         <!--  -->
-        <div class="card mb-3" style="max-width: 540px">
+        <div
+          class="
+            card
+            mb-3
+            collapse
+            show
+            multi-collapse-frameworks multi-collapse-tools
+          "
+          style="max-width: 540px"
+          id="languages"
+        >
           <div class="row no-gutters">
             <div class="col-md-8">
               <div class="card-body">
@@ -59,7 +111,17 @@
         <h2>Frameworks</h2>
         <% frameworks.forEach(function(item){ %>
         <!--  -->
-        <div class="card mb-3" style="max-width: 540px">
+        <div
+          class="
+            card
+            mb-3
+            collapse
+            show
+            multi-collapse-language multi-collapse-tools
+          "
+          style="max-width: 540px"
+          id="frameworks"
+        >
           <div class="row no-gutters">
             <div class="col-md-8">
               <div class="card-body">
@@ -101,7 +163,17 @@
         <h2>Tools</h2>
         <% tools.forEach(function(item){ %>
         <!--  -->
-        <div class="card mb-3" style="max-width: 540px">
+        <div
+          class="
+            card
+            mb-3
+            collapse
+            show
+            multi-collapse-language multi-collapse-frameworks
+          "
+          style="max-width: 540px"
+          id="tools"
+        >
           <div class="row no-gutters">
             <div class="col-md-8">
               <div class="card-body">
