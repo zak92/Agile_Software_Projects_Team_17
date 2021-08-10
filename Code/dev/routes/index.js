@@ -97,6 +97,7 @@ router.get("/addcode",function(req, res){
 });
 
 
+
 router.get("/search", function(req, res){ 
   mainSearch.search(req, res, req.query.search)
 });
@@ -109,6 +110,14 @@ router.get("/progress", function(req, res){
   res.render("progress",{
     user: req.user
   });
+});
+
+router.get("/viewcode",function(req, res){
+  res.render("viewcode",{
+    title: "View CodeSnippets",
+    user: req.user
+  });
+    
 });
 
 
