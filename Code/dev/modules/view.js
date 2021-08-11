@@ -5,7 +5,7 @@ module.exports.viewLang = async (req, res) => {
     let langtype = req.path.slice(1,)
     async function languages(){
         
-        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.language, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes FROM languages tbl_1 INNER JOIN users ON fk_user_id = users.user_id WHERE language = "${langtype}" `;
+        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.language, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes,  tbl_1.language_id FROM languages tbl_1 INNER JOIN users ON fk_user_id = users.user_id WHERE language = "${langtype}" `;
     
         return new Promise(function(resolve,reject){
             db.all(sql, function(err,rows){
@@ -42,7 +42,7 @@ module.exports.viewTools = async (req, res) => {
 
     async function tools(){
         
-        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.tool, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes FROM tools tbl_1 INNER JOIN users ON fk_user_id = users.user_id `;
+        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.tool, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes, tbl_1.tool_id  FROM tools tbl_1 INNER JOIN users ON fk_user_id = users.user_id `;
     
         return new Promise(function(resolve,reject){
             db.all(sql, function(err,rows){
@@ -79,7 +79,7 @@ module.exports.viewFrameworks = async (req, res) => {
 
     async function frameworks(){
         
-        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.framework, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes FROM frameworks tbl_1 INNER JOIN users ON fk_user_id = users.user_id `;
+        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.framework, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes, tbl_1.framework_id  FROM frameworks tbl_1 INNER JOIN users ON fk_user_id = users.user_id `;
         //users.username, frameworks.fk_user_id, frameworks.framework, frameworks.title 
         return new Promise(function(resolve,reject){
             db.all(sql, function(err,rows){
