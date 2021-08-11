@@ -5,6 +5,7 @@ var db = require('../db');
 var mainSearch = require('../modules/search');
 var Ranking = require('../modules/ranking');
 var view = require('../modules/view');
+var reputation = require('../modules/reputation');
 
 router.get("/",async function(req, res){
 
@@ -120,5 +121,8 @@ router.get("/viewcode",function(req, res){
     
 });
 
+router.get("/vote",function(req, res){
+  reputation.upvote(req, res);
+});
 
 module.exports = router;
