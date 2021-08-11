@@ -23,7 +23,8 @@ module.exports.viewLang = async (req, res) => {
       })
     
     res.render("list", {
-    title: "Language: " + langtype,
+    title: "Language",
+    subtitle: langtype,
     user: req.user,
     dbresults: formattedLanguageResults,
     });
@@ -61,6 +62,7 @@ module.exports.viewTools = async (req, res) => {
     
     res.render("list", {
     title: 'Tools',
+    subtitle: false,
     user: req.user,
     dbresults: formattedToolsResults,
     });
@@ -98,6 +100,7 @@ module.exports.viewFrameworks = async (req, res) => {
       console.log(formattedFrameworksResults)
     res.render("list", {
     title: 'Frameworks',
+    subtitle: false,
     user: req.user,
     dbresults: formattedFrameworksResults,
     });
