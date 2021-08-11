@@ -44,7 +44,11 @@
               <td><%=item[4] %></td>
               <td><a href="<%= unescape(title).toLowerCase() %>/<%= item[8] %>" class="btn btn-primary" ></button>View</a></td>
               <% if (user) { %>
-              <td><a href="/vote?post_type=<%= title.toLowerCase() %>&post_id=<%= item[8]%>&subtitle=<%= unescape(subtitle)%>" class="btn btn-dark" ></button>Vote</a></td>
+                <% if (item[9]==null) { %>
+                  <td><a href="/vote?post_type=<%= title.toLowerCase() %>&post_id=<%= item[8]%>&subtitle=<%= unescape(subtitle)%>" class="btn btn-dark" >Vote</a></td>
+                <% }else{ %>
+                  <td><a class="btn btn-gary disabled">Voted</a></td>
+                <% } %>
               <% } %>
               </tr>
               <% }) %>

@@ -19,11 +19,14 @@ module.exports.upvote = async (req, res) => {
                 await reputation.InsertRecord(post_type, post_id, user_id);
                 await reputation.ModifyVote(post_type, post_id);
                 
-                if(req.query.subtitle){
+                if(req.query.subtitle == 'false'){
+
+                    res.redirect(`/${post_type}`);
+
+                }else{
+                    
                     console.log(req.query.subtitle);
                     res.redirect(`/${req.query.subtitle}`);
-                }else{
-                    res.redirect(`/${post_type}`);
                 }
             }
             
