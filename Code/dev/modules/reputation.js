@@ -14,13 +14,17 @@ module.exports.upvote = async (req, res) => {
             let VoteExist = await reputation.CheckVote(post_type, post_id, user_id);
 
             if(VoteExist){
-                res.redirect(`/${post_type}`);
+                res.redirect(`/`);
             }else{
-
                 await reputation.InsertRecord(post_type, post_id, user_id);
                 await reputation.ModifyVote(post_type, post_id);
-                res.redirect(`/${post_type}`);
-
+                
+                if(req.query.subtitle){
+                    console.log(req.query.subtitle);
+                    res.redirect(`/${req.query.subtitle}`);
+                }else{
+                    res.redirect(`/${post_type}`);
+                }
             }
             
         }else{
@@ -31,7 +35,7 @@ module.exports.upvote = async (req, res) => {
 
     catch(error){
         console.log(error);
-        res.redirect(`/${post_type}`);
+        res.redirect(`/`);
     }
 
     
@@ -59,7 +63,7 @@ module.exports.ModifyVote = (post_type, post_id) =>{
         
         let str = post_type.slice(0,-1) + '_id';
         let sql = `UPDATE ${post_type} SET upvotes = IFNULL(NULL,0)+1 WHERE ${str} = ${post_id}`;
-
+        console.log(sql);
         db.run(sql, function(err){
 
             if(err){return reject(err);}

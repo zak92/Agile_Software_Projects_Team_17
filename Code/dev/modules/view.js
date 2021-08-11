@@ -23,7 +23,7 @@ module.exports.viewLang = async (req, res) => {
       })
     
     res.render("list", {
-    title: "Language",
+    title: "Languages",
     subtitle: langtype,
     user: req.user,
     dbresults: formattedLanguageResults,
