@@ -34,7 +34,7 @@
             <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
           </svg> Copy to Clipboard</button>
           
-          <button type="button" class="btn btn-secondary" onclick="saveFile()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+          <button type="button" class="btn btn-secondary" onclick="saveFile('code-snippet')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
             <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
           </svg>  Download</button>
@@ -52,48 +52,51 @@
         <%- include ("partials/footer.ejs") -%>
       </div>
     </div>
-
-  </body>
-<script>
-  function CopyToClipboard(containerid) {
-    if (document.selection) {
-      var range = document.body.createTextRange();
-      range.moveToElementText(document.getElementById(containerid));
-      range.select().createTextRange();
-      document.execCommand("copy");
-    } 
-    else if (window.getSelection) {
-        var range = document.createRange();
-        range.selectNode(document.getElementById(containerid));
-        window.getSelection().addRange(range);
-        document.execCommand("copy");
-        alert("Text has been copied")
-    }
-
-    function saveFile() {
-      const snippet = document.getElementById("code-snippet").innerText
-      let data = snippet
-
-      const textToBLOB = new Blob([data], { type: 'text/plain' });
-        const sFileName = 'code_snippet.txt';	   // The file to save the data.
-
-        let newLink = document.createElement("a");
-        newLink.download = sFileName;
-
-        if (window.webkitURL != null) {
-            newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+    <script>
+      function CopyToClipboard(containerid) {
+        if (document.selection) {
+          var range = document.body.createTextRange();
+          range.moveToElementText(document.getElementById(containerid));
+          range.select().createTextRange();
+          document.execCommand("copy");
+        } 
+        else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            alert("Text has been copied")
         }
-        else {
-            newLink.href = window.URL.createObjectURL(textToBLOB);
-            newLink.style.display = "none";
-            document.body.appendChild(newLink);
-        }
-
-        newLink.click(); 
+      }
     
-    }
-}
-</script>
+      function saveFile(containerid) {
+        const snippet = document.getElementById(containerid).innerText
+        let data = snippet
+        
+  
+        const textToBLOB = new Blob([data], { type: 'text/plain' });
+        const sFileName = 'code_snippet.txt';	   // The file to save the data.
+        
+          let newLink = document.createElement("a");
+          
+          newLink.download = sFileName;
+  
+          if (window.webkitURL != null) {
+              newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+          }
+          else {
+              newLink.href = window.URL.createObjectURL(textToBLOB);
+              newLink.style.display = "none";
+              document.body.appendChild(newLink);
+          }
+  
+          newLink.click(); 
+      
+      }
+  
+    </script>
+  </body>
+
 </html>
 
 
