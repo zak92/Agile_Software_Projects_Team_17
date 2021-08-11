@@ -86,20 +86,49 @@ module.exports.mainranking = async(isLimit=false,numLimit)=>{
     if(!numLimit){numLimit = 5;}
 
     if(!isLimit){
-        let sql1 = 'SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (SELECT username, IFNULL(contribution, 0) AS contribution, IFNULL(upvotes, 0) AS upvotes, IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages) AS records GROUP BY fk_user_id) AS total ON user_id = fk_user_id ORDER BY score DESC) AS a'
-    
+        //AllRecords : This table combines all the records in "languages", "tools", and "frameworks"
+        let AllRecords = `SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages`;
+
+        //UpvoteRecords : This table is to count the records in "AllRecords".
+        //Header: "fk_user_id","upvotes","contribution"
+        let UpvoteRecords = `SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (${AllRecords}) AS records GROUP BY fk_user_id`;
+
+        //AllUpvoteRecords : This table is a supplement to "UpvoteRecords" (add all users from the table "users").And calculate the score
+        //
+        //Header: "username","contribution","upvotes", "score"
+        let AllUpvoteRecords = `SELECT username, IFNULL(contribution, 0) AS contribution, IFNULL(upvotes, 0) AS upvotes, IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (${UpvoteRecords}) AS total ON user_id = fk_user_id ORDER BY score DESC`;
+
+        //FinalRecords : This table sorts "AllUpvoteRecords" according to the size of "Score"
+        //Header:"rank", "username","contribution","upvotes", "score"
+        let FinalRecords = `SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (${AllUpvoteRecords}) AS a`;
+
         return new Promise(function(resolve,reject){
-            db.all(sql1,function(err,rows){
+            db.all(FinalRecords,function(err,rows){
                 if(err){return reject(err);}
                 resolve(rows);
             });
         });
 
     }else{
-        let sql1 = 'SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (SELECT username, IFNULL(contribution, 0) AS contribution, IFNULL(upvotes, 0) AS upvotes, IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages) AS records GROUP BY fk_user_id) AS total ON user_id = fk_user_id ORDER BY score DESC) AS a LIMIT (?)'
-    
+        
+        //AllRecords : This table combines all the records in "languages", "tools", and "frameworks"
+        let AllRecords = `SELECT * FROM frameworks UNION ALL SELECT * FROM tools UNION ALL SELECT * FROM languages`;
+
+        //UpvoteRecords : This table is to count the records in "AllRecords".
+        //Header: "fk_user_id","upvotes","contribution"
+        let UpvoteRecords = `SELECT fk_user_id , SUM(upvotes) AS upvotes, COUNT(*) AS contribution FROM (${AllRecords}) AS records GROUP BY fk_user_id`;
+
+        //AllUpvoteRecords : This table is a supplement to "UpvoteRecords" (add all users from the table "users").And calculate the score.
+        //
+        //Header: "username","contribution","upvotes", "score"
+        let AllUpvoteRecords = `SELECT username, IFNULL(contribution, 0) AS contribution, IFNULL(upvotes, 0) AS upvotes, IFNULL(ROUND(upvotes*0.5 + contribution*0.5,0), 0) AS score FROM users LEFT JOIN (${UpvoteRecords}) AS total ON user_id = fk_user_id ORDER BY score DESC`;
+
+        //FinalRecords : This table sorts "AllUpvoteRecords" according to the size of "Score". And limit the number of output entries.
+        //Header:"rank", "username","contribution","upvotes", "score"
+        let FinalRecords = `SELECT RANK() OVER( ORDER BY a.score DESC) AS rank, a.* FROM (${AllUpvoteRecords}) AS a LIMIT ${numLimit}`;
+
         return new Promise(function(resolve,reject){
-            db.all(sql1,[numLimit],function(err,rows){
+            db.all(FinalRecords,function(err,rows){
                 if(err){return reject(err);}
                 resolve(rows);
             });

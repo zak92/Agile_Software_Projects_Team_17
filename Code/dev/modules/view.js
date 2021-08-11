@@ -8,7 +8,11 @@ module.exports.viewLang = async (req, res) => {
         let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.language, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes,  tbl_1.language_id FROM languages tbl_1 INNER JOIN users ON fk_user_id = users.user_id WHERE language = "${langtype}" `;
 
         if(req.user){
+
+          //sql_sub1 : This table is to select records related to the currently logged in user.
           let sql_sub1 = `SELECT vote_id, post_id FROM vote WHERE post_type = 'languages' AND user_id = ${req.user.id}`;
+
+          //sql : table "tbl_2" in "sql" LEFT JOIN table "tbl_3" in "sql_sub1"
           sql = `SELECT tbl_2.* ,tbl_3.vote_id FROM (${sql}) AS tbl_2 LEFT JOIN (${sql_sub1}) AS tbl_3 ON tbl_2.language_id = tbl_3.post_id`;
         }
 
@@ -50,8 +54,13 @@ module.exports.viewTools = async (req, res) => {
         
         let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.tool, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes, tbl_1.tool_id  FROM tools tbl_1 INNER JOIN users ON fk_user_id = users.user_id `;
         if(req.user){
+
+          //sql_sub1 : This table is to select records related to the currently logged in user.
           let sql_sub1 = `SELECT vote_id, post_id FROM vote WHERE post_type = 'tools' AND user_id = ${req.user.id}`;
+
+          //sql : table "tbl_2" in "sql" LEFT JOIN table "tbl_3" in "sql_sub1"
           sql = `SELECT tbl_2.* ,tbl_3.vote_id FROM (${sql}) AS tbl_2 LEFT JOIN (${sql_sub1}) AS tbl_3 ON tbl_2.tool_id = tbl_3.post_id`;
+
         }
 
         return new Promise(function(resolve,reject){
@@ -94,7 +103,11 @@ module.exports.viewFrameworks = async (req, res) => {
         //users.username, frameworks.fk_user_id, frameworks.framework, frameworks.title 
 
         if(req.user){
+          
+          //sql_sub1 : This table is to select records related to the currently logged in user.
           let sql_sub1 = `SELECT vote_id, post_id FROM vote WHERE post_type = 'frameworks' AND user_id = ${req.user.id}`;
+
+          //sql : table "tbl_2" in "sql" LEFT JOIN table "tbl_3" in "sql_sub1"
           sql = `SELECT tbl_2.* ,tbl_3.vote_id FROM (${sql}) AS tbl_2 LEFT JOIN (${sql_sub1}) AS tbl_3 ON tbl_2.framework_id = tbl_3.post_id`;
         }
 

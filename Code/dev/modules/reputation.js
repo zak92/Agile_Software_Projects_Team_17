@@ -7,25 +7,30 @@ module.exports.upvote = async (req, res) => {
     try{
         //Check login status
         if(req.user){
+
             let post_type = req.query.post_type;
             let post_id = req.query.post_id;
             let user_id = req.user.id;
 
+            //Prevent users from using the get method to vote maliciously, so need to check the table "vote".
             let VoteExist = await reputation.CheckVote(post_type, post_id, user_id);
 
+            //If VoteExist is true, the same record exists in the database.
             if(VoteExist){
                 res.redirect(`/`);
             }else{
+                //Insert a record into the table "vote"
                 await reputation.InsertRecord(post_type, post_id, user_id);
+                //Update the "upvotes" of the target table
                 await reputation.ModifyVote(post_type, post_id);
                 
+                //Determine whether the current page has "subtitle" (to determine whether it is of the "languages" type)
                 if(req.query.subtitle == 'false'){
 
                     res.redirect(`/${post_type}`);
 
                 }else{
-                    
-                    console.log(req.query.subtitle);
+          
                     res.redirect(`/${req.query.subtitle}`);
                 }
             }
@@ -48,9 +53,10 @@ module.exports.InsertRecord = (post_type, post_id, user_id) =>{
 
 
     return new Promise(function(resolve,reject){
-        let sql = 'INSERT INTO vote(post_type, post_id, user_id) VALUES(?, ?, ?)';
 
-        db.run(sql,[post_type, post_id, user_id], function(err){
+        //Insert an upvote record into the table "vote".
+        let sql = `INSERT INTO vote(post_type, post_id, user_id) VALUES(?, ?, ?)`;
+        db.run(sql, [post_type, post_id, user_id], function(err){
 
             if(err){return reject(err);}
 
@@ -64,9 +70,14 @@ module.exports.ModifyVote = (post_type, post_id) =>{
 
     return new Promise(function(resolve,reject){
         
+        //etc..."frameworks" ---->> "framework_id"
+        //etc..."tools" ---->> "tool_id"
+        //etc..."languages" ---->> "language_id"
         let str = post_type.slice(0,-1) + '_id';
-        let sql = `UPDATE ${post_type} SET upvotes = IFNULL(NULL,0)+1 WHERE ${str} = ${post_id}`;
-        console.log(sql);
+
+        //Upvote + 1
+        let sql = `UPDATE ${post_type} SET upvotes = upvotes + 1 WHERE ${str} = ${post_id}`;
+
         db.run(sql, function(err){
 
             if(err){return reject(err);}
@@ -79,7 +90,10 @@ module.exports.ModifyVote = (post_type, post_id) =>{
 module.exports.CheckVote = (post_type, post_id, user_id) =>{
 
     return new Promise(function(resolve,reject){
+
+        //Check whether the same record exists in the "vote" table
         let sql = `SELECT vote_id FROM vote WHERE post_type = '${post_type}' AND post_id = ${post_id} AND user_id = ${user_id}`;
+
         db.get(sql,function(err, row){
             if(err){return reject(err);}
             if(row){
