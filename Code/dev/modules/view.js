@@ -31,6 +31,8 @@ module.exports.viewLang = async (req, res) => {
         return Object.values(result)
       })
     
+    let tagsArray = this.ProcessTags(languageResults);
+    console.log(tagsArray);
     res.render("list", {
     title: "Languages",
     subtitle: langtype,
@@ -77,7 +79,8 @@ module.exports.viewTools = async (req, res) => {
     let formattedToolsResults = results.map(result => {
         return Object.values(result)
       })
-    
+    let tagsArray = this.ProcessTags(results);
+    console.log(tagsArray);
     res.render("list", {
     title: 'Tools',
     subtitle: false,
@@ -125,7 +128,9 @@ module.exports.viewFrameworks = async (req, res) => {
     let formattedFrameworksResults = results.map(result => {
         return Object.values(result)
       })
-      console.log(formattedFrameworksResults)
+    console.log(formattedFrameworksResults);
+    let tagsArray = this.ProcessTags(results);
+    console.log(tagsArray);
     res.render("list", {
     title: 'Frameworks',
     subtitle: false,
@@ -141,4 +146,39 @@ module.exports.viewFrameworks = async (req, res) => {
             results:[]
           });
       }
+}
+
+module.exports.ProcessTags = (results)=>{
+
+  //Initialize a blank string
+  let tagstr = '';
+
+  //Traverse the results and insert the tags value into tagstr
+  results.forEach(result => {
+    tagstr = tagstr + result.tags + ', ';
+  });
+  //'CLI, Commands, CLI, Commands, CLI, Commands, CLI, Commands, CLI, Commands, CLI, Commands, CLI, Commands, CLI, Commands, '
+  
+  //Split string
+  let strArray = tagstr.split(', ');
+  //['CLI', 'Commands', 'CLI', 'Commands','CLI', 'Commands','CLI', 'Commands','CLI', 'Commands','CLI', 'Commands','CLI', 'Commands','CLI', 'Commands', '']
+  console.log(strArray);
+  //Delete the last element in the array
+  strArray.pop();
+  //['CLI', 'Commands', 'CLI', 'Commands','CLI', 'Commands','CLI', 'Commands','CLI', 'Commands','CLI', 'Commands','CLI', 'Commands','CLI', 'Commands']
+
+  //Use the dictionary to de-duplicate the array of strArray
+  let n = {'':true};//Predefine empty fields
+  let r=[];
+
+  for(var i= 0; i<strArray.length;i++){
+      if(!n[strArray[i]]){
+        n[strArray[i]] = true;
+        r.push(strArray[i]);
+      }
+  }
+  //[ 'CLI', 'Commands' ]
+
+  return r;
+
 }
