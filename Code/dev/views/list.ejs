@@ -20,9 +20,10 @@
           
           <h2 class="text-align-center"><%= title %><% if(subtitle){ %>: <%=unescape(subtitle)%><% } %></h2>
           <p class="lead">All code snippets</p>
-          
-          <%  dbresults.forEach(function(item){ %> 
-          Tags: <%=item[6].split(",")%>
+
+          Tags:
+          <%  tags.forEach(function(item){ %> 
+            <label><%=item%></label>
           <% }) %>
           
           <table class="table">

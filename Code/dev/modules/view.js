@@ -38,6 +38,7 @@ module.exports.viewLang = async (req, res) => {
     subtitle: langtype,
     user: req.user,
     dbresults: formattedLanguageResults,
+    tags: tagsArray
     });
     }catch (error) {
         console.log(error);
@@ -86,6 +87,7 @@ module.exports.viewTools = async (req, res) => {
     subtitle: false,
     user: req.user,
     dbresults: formattedToolsResults,
+    tags: tagsArray
     });
     }catch (error) {
         console.log(error);
@@ -136,6 +138,7 @@ module.exports.viewFrameworks = async (req, res) => {
     subtitle: false,
     user: req.user,
     dbresults: formattedFrameworksResults,
+    tags: tagsArray
     });
     }catch (error) {
         console.log(error);
