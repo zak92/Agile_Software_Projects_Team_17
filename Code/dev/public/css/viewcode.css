@@ -1,0 +1,37 @@
+.container {
+  max-width: 798px;
+}
+
+#code-snippet {
+  padding: 2em 4em 3em 4em;
+  margin: auto;
+  background-color: black;
+  color: white;
+  font-family: "Roboto Mono", monospace;
+}
+
+.btn-secondary {
+  width: 253px;
+  border-radius: 0%;
+  background-color: rgb(0, 76, 153);
+  border: none;
+}
+
+.snippet-rep {
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-danger {
+  border-radius: 0%;
+  width: 384px;
+  border: none;
+}
+
+.btn-dark {
+  border-radius: 0%;
+  width: 384px;
+  background-color: rgb(76, 153, 0);
+  border: none;
+}

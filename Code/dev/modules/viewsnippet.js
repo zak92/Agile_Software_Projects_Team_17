@@ -11,6 +11,7 @@ module.exports.viewSnippets = async (req, res) => {
     let code_snippet = type + `.code_snippet`
     let str = type.slice(0,-1) + '_id';
     let str_id = type + `.` + str
+    
 
    
     async function viewSnippetInfo(){
@@ -19,7 +20,7 @@ module.exports.viewSnippets = async (req, res) => {
     
     let sql = `SELECT ${title}, users.username, ${description}, ${last_update}, ${upvotes}, ${flagged}, ${code_snippet}
               FROM ${type}
-              INNER JOIN  users ON ${str_id}=users.user_id
+              INNER JOIN  users ON fk_user_id=users.user_id
               WHERE ${str_id}=?` ;  
     
         
@@ -29,6 +30,7 @@ module.exports.viewSnippets = async (req, res) => {
             db.all(sql , [req.query.id], function(err,rows){
             if(err){return reject(err);}
             resolve(rows);
+            console.log(rows)
             
             });
         });
