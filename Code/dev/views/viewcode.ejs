@@ -12,20 +12,20 @@
   
         <main class="container">
           <div>
-            <h2>[Placeholder: Title]</h2>
+            <h2>Your code has succesfully been added!</h2>
           </div>
           <div>
-            <h2>[Placeholder: Contributor]</h2>
+            <h2><%= title %><% if(subtitle){ %>: <%=unescape(subtitle)%><% } %></h2>
           </div>
           <div>
-            <h2>[Placeholder: Last updated]</h2>
+            <h2><%= user %></h2>
           </div>
           <div>
-            <h2>[Placeholder: Description]</h2>
+            <h2><%= description %></h2>
           </div>
           <div>
             <h2>Code</h2>
-            <div id="code-snippet">[Placeholder: code snippet here]</div>
+            <div id="code-snippet"><%= code_snippet %></div>
           </div>
 
           <button type="button" class="btn btn-secondary" onclick="CopyToClipboard('code-snippet')"><svg xmlns="http://www.w3.org/2000/svg" 

@@ -6,6 +6,7 @@ var mainSearch = require('../modules/search');
 var Ranking = require('../modules/ranking');
 var view = require('../modules/view');
 var reputation = require('../modules/reputation');
+var codeAdded = require('../modules/codeadded');
 
 router.get("/",async function(req, res){
 
@@ -62,7 +63,11 @@ router.get("/addcode",function(req, res){
   });
 });
 
-
+router.post("/codeadded", function(req, res){ 
+  codeAdded.insertLang(req,res);
+  codeAdded.insertTools(req,res);
+  codeAdded.insertFrameworks(req,res);
+});
 
 router.get("/search", function(req, res){ 
   mainSearch.search(req, res, req.query.search)
