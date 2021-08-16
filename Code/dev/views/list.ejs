@@ -20,7 +20,6 @@
           
           <h2 class="text-align-center"><%= title %><% if(subtitle){ %>: <%=unescape(subtitle)%><% } %></h2>
           <p class="lead">All code snippets</p>
-
           Tags:
           <%  tags.forEach(function(item){ %> 
             <label><%=item%></label>
@@ -43,7 +42,7 @@
               <td><%=item[3] %></td>
               <td><%=item[0] %></td>
               <td><%=item[4] %></td>
-              <td><a href="<%= unescape(title).toLowerCase() %>/<%= item[8] %>" class="btn btn-primary" ></button>View</a></td>
+              <td><a href="/viewcode?type=<%= unescape(title).toLowerCase() %>&id=<%= item[8]%>" class="btn btn-primary" ></button>View</a></td>
               <% if (user) { %>
                 <% if (item[9]==null) { %>
                   <td><a href="/vote?post_type=<%= title.toLowerCase() %>&post_id=<%= item[8]%>&subtitle=<%= unescape(subtitle)%>" class="btn btn-dark" >Vote</a></td>

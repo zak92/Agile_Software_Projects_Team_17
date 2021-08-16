@@ -24,7 +24,7 @@ module.exports.insertLang = (req, res) => {
                 }
             });
 
-        res.render("viewcode", {
+        res.render("viewaddedcode", {
             title: title,
             subtitle: lang,
             user: req.user.username,
@@ -59,7 +59,7 @@ module.exports.insertTools = (req, res) => {
                     console.log(row);
                 }
             });
-        res.render("viewcode", {
+        res.render("viewaddedcode", {
             title: title,
             subtitle: lang,
             user: req.user.username,
@@ -94,7 +94,7 @@ module.exports.insertFrameworks =  (req, res) => {
                     console.log(row);
                 }
             });
-        res.render("viewcode", {
+        res.render("viewaddedcode", {
             title: title,
             subtitle: framework,
             user: req.user.username,
