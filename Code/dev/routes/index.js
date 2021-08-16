@@ -6,6 +6,7 @@ var mainSearch = require('../modules/search');
 var Ranking = require('../modules/ranking');
 var view = require('../modules/view');
 var reputation = require('../modules/reputation');
+var viewsnippet = require('../modules/viewsnippet');
 
 router.get("/",async function(req, res){
 
@@ -79,11 +80,9 @@ router.get("/progress", function(req, res){
 });
 
 router.get("/viewcode",function(req, res){
-  res.render("viewcode",{
-    title: "View CodeSnippets",
-    user: req.user
-  });
-    
+  viewsnippet.viewSnippets(req,res)
+  
+
 });
 
 router.get("/vote",function(req, res){
