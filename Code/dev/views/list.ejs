@@ -45,9 +45,9 @@
               <td><a href="/viewcode?type=<%= unescape(title).toLowerCase() %>&id=<%= item[8]%>" class="btn btn-primary" ></button>View</a></td>
               <% if (user) { %>
                 <% if (item[9]==null) { %>
-                  <td><a href="/vote?post_type=<%= title.toLowerCase() %>&post_id=<%= item[8]%>&subtitle=<%= unescape(subtitle)%>" class="btn btn-dark" >Vote</a></td>
+                  <td><a ><button class="btn btn-dark" id="btn-voted-<%= item[8]%>" onclick="VoteBtnOnClick(this)">Vote</button></a></td>
                 <% }else{ %>
-                  <td><a class="btn btn-gary disabled">Voted</a></td>
+                  <td><a ><button class="btn btn-dark" id="btn-voted-<%= item[8]%>" onclick="VoteBtnOnClick(this)"  disabled>Voted</button></a></td>
                 <% } %>
               <% } %>
               </tr>
@@ -62,6 +62,28 @@
         <%- include ("partials/footer.ejs") -%>
       </div>
     </div>
+    <script>
+      function VoteBtnOnClick(obj){
+        let btn_id = obj.id;
+        let post_id = btn_id.slice(10);
+        let post_type = `<%= title.toLowerCase()%>`;
+        console.log(post_type);
+        $.ajax({
+          type: 'post',
+          url: '/voted',
+          data: {id: post_id, type: post_type},
+          success: function(results){
+            let html = 'Voted'
+            let btn_id = '#' + obj.id;
+
+            if(results == 'success'){
+              $(btn_id).html(html);
+              $(btn_id).attr('disabled',true);
+            }
+          }
+        })
+      }
+    </script>
 
   </body>
 

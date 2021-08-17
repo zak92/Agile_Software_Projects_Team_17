@@ -1,15 +1,14 @@
 var db = require('../db');
 var reputation = require('../modules/reputation');
-  
 
-module.exports.upvote = async (req, res) => {
+module.exports.Upvote_ajax = async (req, res) => {
 
     try{
         //Check login status
         if(req.user){
 
-            let post_type = req.query.post_type;
-            let post_id = req.query.post_id;
+            let post_type = req.body.type;
+            let post_id = req.body.id;
             let user_id = req.user.id;
 
             //Prevent users from using the get method to vote maliciously, so need to check the table "vote".
@@ -17,26 +16,18 @@ module.exports.upvote = async (req, res) => {
 
             //If VoteExist is true, the same record exists in the database.
             if(VoteExist){
-                res.redirect(`/`);
+                res.send(`fail`);
             }else{
                 //Insert a record into the table "vote"
                 await reputation.InsertRecord(post_type, post_id, user_id);
                 //Update the "upvotes" of the target table
                 await reputation.ModifyVote(post_type, post_id);
                 
-                //Determine whether the current page has "subtitle" (to determine whether it is of the "languages" type)
-                if(req.query.subtitle == 'false'){
-
-                    res.redirect(`/${post_type}`);
-
-                }else{
-          
-                    res.redirect(`/${req.query.subtitle}`);
-                }
+                res.send('success');
             }
             
         }else{
-            throw new Error('Logged out');
+            res.send(`/login`);
         }
 
     }
@@ -48,6 +39,39 @@ module.exports.upvote = async (req, res) => {
 
     
 };
+
+module.exports.CheckVote_ajax = async(req,res) => {
+
+    try{
+        //Check login status
+        if(req.user){
+
+            let post_type = req.body.type;
+            let post_id = req.body.id;
+            let user_id = req.user.id;
+
+            //Prevent users from using the get method to vote maliciously, so need to check the table "vote".
+            let VoteExist = await reputation.CheckVote(post_type, post_id, user_id);
+
+            //If VoteExist is true, the same record exists in the database.
+            if(VoteExist){
+                res.send('VoteExisted');
+            }else{
+            
+                res.send('NotExist');
+            }
+            
+        }else{
+            res.send('LoggedOut');
+        }
+
+    }
+
+    catch(error){
+        console.log(error);
+        res.redirect(`/`);
+    }
+}
 
 module.exports.InsertRecord = (post_type, post_id, user_id) =>{
 
@@ -106,74 +130,51 @@ module.exports.CheckVote = (post_type, post_id, user_id) =>{
     });
 };
 
-module.exports.upvote_ajax = async (req, res) => {
 
-    try{
-        //Check login status
-        if(req.user){
 
-            let post_type = req.body.type;
-            let post_id = req.body.id;
-            let user_id = req.user.id;
+// module.exports.upvote = async (req, res) => {
 
-            //Prevent users from using the get method to vote maliciously, so need to check the table "vote".
-            let VoteExist = await reputation.CheckVote(post_type, post_id, user_id);
+//     try{
+//         //Check login status
+//         if(req.user){
 
-            //If VoteExist is true, the same record exists in the database.
-            if(VoteExist){
-                res.send(`fail`);
-            }else{
-                //Insert a record into the table "vote"
-                await reputation.InsertRecord(post_type, post_id, user_id);
-                //Update the "upvotes" of the target table
-                await reputation.ModifyVote(post_type, post_id);
+//             let post_type = req.query.post_type;
+//             let post_id = req.query.post_id;
+//             let user_id = req.user.id;
+
+//             //Prevent users from using the get method to vote maliciously, so need to check the table "vote".
+//             let VoteExist = await reputation.CheckVote(post_type, post_id, user_id);
+
+//             //If VoteExist is true, the same record exists in the database.
+//             if(VoteExist){
+//                 res.redirect(`/`);
+//             }else{
+//                 //Insert a record into the table "vote"
+//                 await reputation.InsertRecord(post_type, post_id, user_id);
+//                 //Update the "upvotes" of the target table
+//                 await reputation.ModifyVote(post_type, post_id);
                 
-                res.send('success');
-            }
+//                 //Determine whether the current page has "subtitle" (to determine whether it is of the "languages" type)
+//                 if(req.query.subtitle == 'false'){
+
+//                     res.redirect(`/${post_type}`);
+
+//                 }else{
+          
+//                     res.redirect(`/${req.query.subtitle}`);
+//                 }
+//             }
             
-        }else{
-            throw new Error('Logged out');
-        }
+//         }else{
+//             throw new Error('Logged out');
+//         }
 
-    }
+//     }
 
-    catch(error){
-        console.log(error);
-        res.redirect(`/`);
-    }
+//     catch(error){
+//         console.log(error);
+//         res.redirect(`/`);
+//     }
 
     
-};
-
-module.exports.CheckVote_ajax = async(req,res) => {
-
-    try{
-        //Check login status
-        if(req.user){
-
-            let post_type = req.body.type;
-            let post_id = req.body.id;
-            let user_id = req.user.id;
-
-            //Prevent users from using the get method to vote maliciously, so need to check the table "vote".
-            let VoteExist = await reputation.CheckVote(post_type, post_id, user_id);
-
-            //If VoteExist is true, the same record exists in the database.
-            if(VoteExist){
-                res.send('VoteExisted');
-            }else{
-            
-                res.send('NotExist');
-            }
-            
-        }else{
-            res.send('LoggedOut');
-        }
-
-    }
-
-    catch(error){
-        console.log(error);
-        res.redirect(`/`);
-    }
-}
+// };

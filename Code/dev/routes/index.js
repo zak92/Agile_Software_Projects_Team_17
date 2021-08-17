@@ -90,13 +90,9 @@ router.get("/viewcode",function(req, res){
 
 });
 
-router.get("/vote",function(req, res){
-  reputation.upvote(req, res);
-});
-
 router.post("/voted", function(req, res){
 
-  reputation.upvote_ajax(req, res);
+  reputation.Upvote_ajax(req, res);
 })
 
 router.get("/voted-check", function(req, res){
