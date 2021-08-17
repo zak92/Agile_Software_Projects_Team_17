@@ -41,7 +41,7 @@
               </svg></button></a>
             </div>
             <div class="vote">
-              <a href="#"><button class="btn btn-dark" >Vote</button></a>
+              <a href="#"><button class="btn btn-dark" id="btn-voted" onclick="VoteBtnOnClick()">Vote</button></a>
               <!--<input class="btn btn-dark" type="button" value="Vote">-->
             </div>
             
@@ -128,7 +128,46 @@
         });
       };
 
-  
+      function VoteBtnOnClick(){
+        let param = window.location.search;
+        $.ajax({
+          type: 'post',
+          url: '/voted',
+          data: param.slice(1),
+          success: function(results){
+            if(results == 'success'){
+              let html = 'Voted'
+              $('#btn-voted').html(html);
+              $('#btn-voted').attr('disabled',true);
+            }
+          }
+        })
+      }
+
+      $(function(){
+        let param = window.location.search;
+        $.ajax({
+          type: 'get',
+          url: '/voted-check',
+          data: param.slice(1),
+          success: function(results){
+            if(results == 'VoteExisted'){
+              let html = 'Voted'
+              $('#btn-voted').html(html);
+              $('#btn-voted').attr('disabled',true);
+            }else if(results == 'NotExist'){
+              let html = 'Vote'
+              $('#btn-voted').html(html);
+              $('#btn-voted').attr('disabled',false);
+            }else if(results == 'LoggedOut'){
+              let html = 'Vote(Need to log in)'
+              $('#btn-voted').html(html);
+              $('#btn-voted').attr('disabled',true);
+            }
+          }
+        })
+      });
+      
     </script>
   </body>
 

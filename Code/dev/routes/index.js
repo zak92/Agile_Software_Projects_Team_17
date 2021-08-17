@@ -94,4 +94,14 @@ router.get("/vote",function(req, res){
   reputation.upvote(req, res);
 });
 
+router.post("/voted", function(req, res){
+
+  reputation.upvote_ajax(req, res);
+})
+
+router.get("/voted-check", function(req, res){
+
+  reputation.CheckVote_ajax(req, res);
+})
+
 module.exports = router;

@@ -105,3 +105,75 @@ module.exports.CheckVote = (post_type, post_id, user_id) =>{
         
     });
 };
+
+module.exports.upvote_ajax = async (req, res) => {
+
+    try{
+        //Check login status
+        if(req.user){
+
+            let post_type = req.body.type;
+            let post_id = req.body.id;
+            let user_id = req.user.id;
+
+            //Prevent users from using the get method to vote maliciously, so need to check the table "vote".
+            let VoteExist = await reputation.CheckVote(post_type, post_id, user_id);
+
+            //If VoteExist is true, the same record exists in the database.
+            if(VoteExist){
+                res.send(`fail`);
+            }else{
+                //Insert a record into the table "vote"
+                await reputation.InsertRecord(post_type, post_id, user_id);
+                //Update the "upvotes" of the target table
+                await reputation.ModifyVote(post_type, post_id);
+                
+                res.send('success');
+            }
+            
+        }else{
+            throw new Error('Logged out');
+        }
+
+    }
+
+    catch(error){
+        console.log(error);
+        res.redirect(`/`);
+    }
+
+    
+};
+
+module.exports.CheckVote_ajax = async(req,res) => {
+
+    try{
+        //Check login status
+        if(req.user){
+
+            let post_type = req.body.type;
+            let post_id = req.body.id;
+            let user_id = req.user.id;
+
+            //Prevent users from using the get method to vote maliciously, so need to check the table "vote".
+            let VoteExist = await reputation.CheckVote(post_type, post_id, user_id);
+
+            //If VoteExist is true, the same record exists in the database.
+            if(VoteExist){
+                res.send('VoteExisted');
+            }else{
+            
+                res.send('NotExist');
+            }
+            
+        }else{
+            res.send('LoggedOut');
+        }
+
+    }
+
+    catch(error){
+        console.log(error);
+        res.redirect(`/`);
+    }
+}
