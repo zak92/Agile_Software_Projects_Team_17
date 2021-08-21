@@ -54,6 +54,93 @@
               <% }) %>
             </tbody>
           </table>
+
+          <div class="row">
+            <div class="col-md-12">
+              <ul class="pagination justify-content-center pagination-sm" >
+                
+                <li class="page-item  <% if (currentpage == 1) { %> disabled <% }else{ %> abled <% } %>  ">
+                  <a  class="page-link border-dark rounded mx-2" href="?currentpage=1&itemlimit=<%-itemlimit%>" >First</a>
+                </li>
+
+                <li class="page-item <% if (currentpage == 1) { %> disabled <% }else{ %> abled <% } %>  ">
+                  <a  class="page-link border-dark rounded mx-2" href="?currentpage=<%-currentpage-1%>&itemlimit=<%-itemlimit%>">&larr;Previous</a>
+                </li>
+
+                <!-- Pagnation Logic -->
+                <% if (totalpages>5) { %>
+                  <!-- When the totalpages is greater than 5 -->
+
+                  <% if (currentpage>=4 && currentpage <= totalpages-2) { %>
+
+                    <% for(let i = currentpage-2; i <= currentpage+2; i++){ %>
+
+                      <li class="page-item <% if (currentpage == i) { %> active <% }%>">
+                        <a class="page-link border-dark rounded mx-2" href="?currentpage=<%=i%>&itemlimit=<%-itemlimit%>" ><%=i%></a>
+                      </li>
+  
+                    <% } %> 
+                  
+                  <% }else if(currentpage>=4 && currentpage > totalpages-2){%>
+
+                    <% for(let i = currentpage-2; i <= totalpages; i++){ %>
+
+                      <li class="page-item <% if (currentpage == i) { %> active <% }%>">
+                        <a class="page-link border-dark rounded mx-2" href="?currentpage=<%=i%>&itemlimit=<%-itemlimit%>" ><%=i%></a>
+                      </li>
+
+                    <% } %>  
+
+                  <% }else if(currentpage<4){ %>
+
+                    <% for(let i = 1; i <= 5; i++){ %>
+
+                      <li class="page-item <% if (currentpage == i) { %> active <% }%>">
+                        <a class="page-link border-dark rounded mx-2" href="?currentpage=<%=i%>&itemlimit=<%-itemlimit%>" ><%=i%></a>
+                      </li>
+  
+                    <% } %> 
+                    
+                  <% } %> 
+
+                <% }else if(totalpages <= 5){ %>
+                  <!-- When the totalpages is less than or equal to 5 -->
+                  <% for(let i = 1; i <= totalpages; i++){ %>
+
+                    <li class="page-item <% if (currentpage == i) { %> active <% }%>">
+                      <a class="page-link border-dark rounded mx-2" href="?currentpage=<%=i%>&itemlimit=<%-itemlimit%>" ><%=i%></a>
+                    </li>
+
+                  <% } %> 
+
+                <% } %> 
+                <!-- Pagnation Logic -->
+  
+                <li class="page-item <% if (currentpage == totalpages) { %> disabled <% }else{ %> abled <% } %> ">
+                  <a class="page-link border-dark rounded mx-2" href="?currentpage=<%-currentpage+1%>&itemlimit=<%-itemlimit%>">&rarr;Next</a>
+                </li>
+
+                <li class="page-item <% if (currentpage == totalpages) { %> disabled <% }else{ %> abled <% } %> ">
+                  <a class="page-link border-dark rounded mx-2" href="?currentpage=<%-totalpages%>&itemlimit=<%-itemlimit%>">End</a>
+                </li>
+                <!-- Display Limit Drop-down list -->
+                <li class="small mx-2">
+                <div class="dropdown">
+                  Show
+                  <button id="limitBtn" type="button" class="btn dropdown-toggle btn-sm" data-toggle="dropdown"><%-itemlimit%></button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="?itemlimit=5">5</a>
+                    <a class="dropdown-item" href="?itemlimit=10">10</a>
+                    <a class="dropdown-item" href="?itemlimit=15">15</a>
+                  </div>
+                  entries
+                </div>
+              </li>
+              <!-- Display Limit Drop-down list -->
+              </ul>
+            </div>
+          </div>
+
         </div>
       </div>
   
