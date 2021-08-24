@@ -45,7 +45,7 @@ module.exports.viewSnippets = async (req, res) => {
     
     
     res.render("viewcode", {
-      title: "Code Snippets",
+      title: type,
       user: req.user,
       dbsnippetresults: formattedSnippetResults
     

@@ -8,6 +8,7 @@ var view = require('../modules/view');
 var reputation = require('../modules/reputation');
 var codeAdded = require('../modules/codeadded');
 var viewsnippet = require('../modules/viewsnippet');
+var flagsnippet =  require('../modules/flag');
 
 router.get("/",async function(req, res){
 
@@ -85,8 +86,32 @@ router.get("/progress", function(req, res){
 });
 
 router.get("/viewcode",function(req, res){
-  viewsnippet.viewSnippets(req,res)
-  
+  viewsnippet.viewSnippets(req,res);
+ 
+});
+
+router.post("/flagsnippet/:type/:id",function(req, res){
+  flagsnippet.flagSnippet(req, res);
+  // set all amounts to zero
+  /*let type = req.params.type;
+  let str = type.slice(0,-1) + '_id';
+  let str_id = type + `.` + str
+  let query = `UPDATE ${type} SET flagged=1 WHERE ${str_id}=?` ;
+         
+  // execute sql query
+  db.all(query,  [req.params.id],(err, result) => {
+      if (err) {
+          return console.log(err.message);
+      }
+      else {
+        res.render("viewcode", {
+          title: type,
+          user: req.user,
+          //dbsnippetresults: formattedSnippetResults
+        
+        });
+      }
+  });*/
 
 });
 
