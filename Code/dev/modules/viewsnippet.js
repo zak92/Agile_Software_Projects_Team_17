@@ -18,7 +18,7 @@ module.exports.viewSnippets = async (req, res) => {
 
     // get data that matches the unique id
     
-    let sql = `SELECT ${title}, users.username, ${description}, ${last_update}, ${upvotes}, ${flagged}, ${code_snippet}
+    let sql = `SELECT ${title}, users.username, ${description}, ${last_update}, ${upvotes}, ${flagged}, ${code_snippet}, ${str_id}
               FROM ${type}
               INNER JOIN  users ON fk_user_id=users.user_id
               WHERE ${str_id}=?` ;  
