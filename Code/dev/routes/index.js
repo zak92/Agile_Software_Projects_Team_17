@@ -82,7 +82,7 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-router.get('/new', function(req, res) {
+router.get('/newuser', function(req, res) {
   res.render('signup',{user: req.user});
 });
 
