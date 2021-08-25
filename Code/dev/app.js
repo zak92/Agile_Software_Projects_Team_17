@@ -6,9 +6,9 @@ var logger = require('morgan');
 
 
 var indexRouter = require('./routes/index');
-var authRouter = require('./routes/auth');
-var myaccountRouter = require('./routes/myaccount');
-var usersRouter = require('./routes/users');
+// var authRouter = require('./routes/auth');
+// var myaccountRouter = require('./routes/myaccount');
+// var usersRouter = require('./routes/users');
 
 //create an instance of the express module
 const app = express();
@@ -46,9 +46,9 @@ app.use(express.static(__dirname + "/public"));
 
 //define routes
 app.use('/', indexRouter);
-app.use('/', authRouter);
-app.use('/myaccount', myaccountRouter);
-app.use('/users', usersRouter);
+// app.use('/', authRouter);
+// app.use('/myaccount', myaccountRouter);
+// app.use('/users', usersRouter);
 app.use("/css", express.static(path.join(__dirname, "public/css")))
 app.use("/js", express.static(path.join(__dirname, "public/js")))
 
