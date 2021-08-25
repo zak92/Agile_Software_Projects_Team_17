@@ -1,4 +1,5 @@
 var db = require("../db");
+var crypto = require('crypto');
 
 module.exports.viewAccount = (req, res) => {
   
