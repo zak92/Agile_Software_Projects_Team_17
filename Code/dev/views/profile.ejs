@@ -14,14 +14,12 @@
 
           <div class="grid">
     
-            <figure>
-              <img src="/images/woman.png" width="128" height="128"/>
-            </figure>
-    
             <div>
               <hgroup>
                 <h4><%= user.displayName %></h4>
                 <p><small><%= user.username %></small></p>
+                <p><small><%= user.email %></small></p>
+                <p><small><%= user.is_admin %></small></p>
               </hgroup>
                 
               <% if (user.emails) { %>
