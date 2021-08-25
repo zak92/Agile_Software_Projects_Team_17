@@ -13,20 +13,20 @@
         <main class="">
       
             <article class="grid">
-              <div>
-                <hgroup>
-                  <h1>Sign up</h1>
-                </hgroup>
+              <h3 class ="text-center">Sign up</h3>
+              <div class ="d-flex justify-content-center mb-5">
                 <form action="/users" method="post">
-                  <input type="text" name="name" placeholder="Name">
-                  <input type="text" name="username" placeholder="Username">
-                  <input type="email" name="email" placeholder="Email">
-                  <label>User is an admin<input type="radio" name="is_admin" value="1"></label>
-                  <input type="password" name="password" placeholder="Password">
-                  <button type="submit" class="contrast">Sign up</button>
+                  <input type="text" name="name" placeholder="Name" class="form-control mb-3">
+                  <input type="text" name="username" placeholder="Username" class="form-control mb-3">
+                  <input type="email" name="email" placeholder="Email" class="form-control mb-3">
+                  <div class="form-check form-check-inline mb-3">
+                    <input type="radio" name="is_admin" value="1" class="form-check-input" id="is_admin">
+                    <label class="form-check-label" for="is_admin">User is an admin</label>
+                  </div>
+                  <input type="password" name="password" placeholder="Password" class="form-control mb-3">
+                  <button type="submit" class="btn btn-dark">Sign up</button>
                 </form>
               </div>
-              <div></div>
             </article>
           </main>
 
