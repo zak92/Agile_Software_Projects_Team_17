@@ -1,4 +1,7 @@
 const express = require('express');
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+var passport = require('passport');
+
 
 const router = express.Router();
 var db = require('../db');
@@ -9,6 +12,7 @@ var reputation = require('../modules/reputation');
 var codeAdded = require('../modules/codeadded');
 var viewsnippet = require('../modules/viewsnippet');
 var flagsnippet =  require('../modules/flag');
+var users =  require('../modules/users');
 
 router.get("/",async function(req, res){
 
@@ -58,7 +62,37 @@ router.get("/frameworks",function(req, res){
   view.viewFrameworks(req,res)
 });
 
-router.get("/addcode",function(req, res){
+//Start of user related routes
+router.get("/myaccount",ensureLoggedIn(), function(req, res){
+  users.viewAccount(req,res)
+});
+
+router.get('/login', function(req, res) {
+  res.render('login', {user: req.user });
+});
+
+router.post('/login/password', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureMessage: true
+}));
+
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
+router.get('/new', function(req, res) {
+  res.render('signup',{user: req.user});
+});
+
+router.post('/users', function(req, res, next) {
+  users.add(req, res,next)
+});
+
+//End of user related routes
+
+router.get("/addcode",ensureLoggedIn(),function(req, res){
   res.render("addcode", {
     title: "Add CodeSnippets",
     user: req.user 
