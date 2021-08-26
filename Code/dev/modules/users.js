@@ -24,14 +24,8 @@ module.exports.viewAccount = (req, res) => {
     db.get('SELECT * FROM Users WHERE username = ? LIMIT 1', [ req.body.username], function(err, row, next) {
       if (err) { return next(err); }
       if(row){ 
-        console.log("username in system")
-        //return res.end('username in system');
-
-        return res.render('signup', {user: req.user, message: 'username in system' });
-
-
+        return res.render('signup', {user: req.user, message: 'Username already exist' });
       }else {
-        console.log("NOT in system")
         var salt = crypto.randomBytes(16);
         crypto.pbkdf2(req.body.password, salt, 10000, 32, 'sha256', function(err, hashedPassword) {
           if (err) { return next(err); }
