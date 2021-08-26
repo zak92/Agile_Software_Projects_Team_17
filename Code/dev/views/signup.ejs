@@ -11,10 +11,16 @@
         <%- include ("partials/nav.ejs") -%>
   
         <main class="">
-      
             <article class="grid">
-              <h3 class ="text-center">Sign up</h3>
+              <% if (locals.message) { %>
+                <div class ="alert alert-danger justify-content-center"><%= message %></div> 
+                <% }else{ %> 
+
+              <% } %>
+              <h3 class ="text-center">Sign up </h3>
+              
               <div class ="d-flex justify-content-center mb-5">
+
                 <form action="/users" method="post">
                   <input type="text" name="name" placeholder="Name" class="form-control mb-3">
                   <input type="text" name="username" placeholder="Username" class="form-control mb-3">
