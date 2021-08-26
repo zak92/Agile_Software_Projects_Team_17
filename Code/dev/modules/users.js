@@ -20,29 +20,44 @@ module.exports.viewAccount = (req, res) => {
   }
 
   module.exports.add = (req, res, next) => {
-    var salt = crypto.randomBytes(16);
-    crypto.pbkdf2(req.body.password, salt, 10000, 32, 'sha256', function(err, hashedPassword) {
+    //check if username already exist in the system
+    db.get('SELECT * FROM Users WHERE username = ? LIMIT 1', [ req.body.username], function(err, row, next) {
       if (err) { return next(err); }
-      
-      db.run('INSERT INTO users (username, hashed_password, salt, name, email, is_admin) VALUES (?, ?, ?, ?, ?, ? )', [
-        req.body.username,
-        hashedPassword,
-        salt,
-        req.body.name,
-        req.body.email,
-        req.body.is_admin
-      ], function(err) {
-        if (err) { return next(err); }
-        
-        var user = {
-          id: this.lastID.toString(),
-          username: req.body.username,
-          displayName: req.body.name
-        };
-        req.login(user, function(err) {
+      if(row){ 
+        console.log("username in system")
+        //return res.end('username in system');
+
+        return res.render('signup', {user: req.user, message: 'username in system' });
+
+
+      }else {
+        console.log("NOT in system")
+        var salt = crypto.randomBytes(16);
+        crypto.pbkdf2(req.body.password, salt, 10000, 32, 'sha256', function(err, hashedPassword) {
           if (err) { return next(err); }
-          res.redirect('/');
+          
+          db.run('INSERT INTO users (username, hashed_password, salt, name, email, is_admin) VALUES (?, ?, ?, ?, ?, ? )', [
+            req.body.username,
+            hashedPassword,
+            salt,
+            req.body.name,
+            req.body.email,
+            req.body.is_admin
+          ], function(err) {
+            if (err) { return next(err); }
+            
+            var user = {
+              id: this.lastID.toString(),
+              username: req.body.username,
+              displayName: req.body.name
+            };
+            req.login(user, function(err) {
+              if (err) { return next(err); }
+              res.redirect('/');
+            });
+          });
         });
-      });
+      }
     });
+
   }
