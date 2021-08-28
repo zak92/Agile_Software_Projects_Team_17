@@ -32,13 +32,17 @@ module.exports.viewLang = async (req, res) => {
       })
     
     let tagsArray = this.ProcessTags(languageResults);
-    console.log(tagsArray);
+    let paginationArray = this.Pagination(formattedLanguageResults,req);
+
     res.render("list", {
     title: "Languages",
     subtitle: langtype,
     user: req.user,
-    dbresults: formattedLanguageResults,
-    tags: tagsArray
+    dbresults: paginationArray[3],
+    tags: tagsArray,
+    totalpages: paginationArray[0],
+    currentpage: paginationArray[1],
+    itemlimit: paginationArray[2]
     });
     }catch (error) {
         console.log(error);
@@ -81,13 +85,17 @@ module.exports.viewTools = async (req, res) => {
         return Object.values(result)
       })
     let tagsArray = this.ProcessTags(results);
-    console.log(tagsArray);
+    let paginationArray = this.Pagination(formattedToolsResults,req);
+    
     res.render("list", {
     title: 'Tools',
     subtitle: false,
     user: req.user,
-    dbresults: formattedToolsResults,
-    tags: tagsArray
+    dbresults: paginationArray[3],
+    tags: tagsArray,
+    totalpages: paginationArray[0],
+    currentpage: paginationArray[1],
+    itemlimit: paginationArray[2]
     });
     }catch (error) {
         console.log(error);
@@ -132,13 +140,17 @@ module.exports.viewFrameworks = async (req, res) => {
       })
     console.log(formattedFrameworksResults);
     let tagsArray = this.ProcessTags(results);
-    console.log(tagsArray);
+    let paginationArray = this.Pagination(formattedFrameworksResults,req);
+
     res.render("list", {
     title: 'Frameworks',
     subtitle: false,
     user: req.user,
-    dbresults: formattedFrameworksResults,
-    tags: tagsArray
+    dbresults: paginationArray[3],
+    tags: tagsArray,
+    totalpages: paginationArray[0],
+    currentpage: paginationArray[1],
+    itemlimit: paginationArray[2]
     });
     }catch (error) {
         console.log(error);
@@ -184,4 +196,37 @@ module.exports.ProcessTags = (results)=>{
 
   return r;
 
+}
+
+module.exports.Pagination = (results,req) => {
+
+  let currentpage = 1;
+  let itemlimit = 5;
+  let totalpages = 1;
+
+  if(results.length <= 0) {
+    return [totalpages, currentpage, itemlimit, []];
+  }
+
+  if(req.query.currentpage){
+    currentpage = parseInt(req.query.currentpage);
+  }
+
+  if(req.query.itemlimit){
+    itemlimit = parseInt(req.query.itemlimit);
+  }
+
+  totalpages = results.length / itemlimit;
+
+  if(results.length % itemlimit != 0 ){
+
+    totalpages = Math.floor(totalpages)+1;
+
+  }
+
+  let data_pos_start = (currentpage - 1) * itemlimit;
+  let data_pos_end = currentpage * itemlimit;
+  let data_slice = results.slice(data_pos_start,data_pos_end);
+
+  return [totalpages, currentpage, itemlimit, data_slice];
 }

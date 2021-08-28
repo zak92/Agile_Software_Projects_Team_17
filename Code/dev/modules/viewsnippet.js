@@ -18,7 +18,7 @@ module.exports.viewSnippets = async (req, res) => {
 
     // get data that matches the unique id
     
-    let sql = `SELECT ${title}, users.username, ${description}, ${last_update}, ${upvotes}, ${flagged}, ${code_snippet}, ${comments}
+    let sql = `SELECT ${title}, users.username, ${description}, ${last_update}, ${upvotes}, ${flagged}, ${code_snippet}, ${str_id},${comments}
               FROM ${type}
               INNER JOIN  users ON fk_user_id=users.user_id
               WHERE ${str_id}=?` ;  
@@ -43,7 +43,7 @@ module.exports.viewSnippets = async (req, res) => {
     
     
     res.render("viewcode", {
-      title: "Code Snippets",
+      title: type,
       user: req.user,
       type: req.query.type,
       dbsnippetresults: formattedSnippetResults

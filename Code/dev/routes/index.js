@@ -1,4 +1,7 @@
 const express = require('express');
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+var passport = require('passport');
+
 
 const router = express.Router();
 var db = require('../db');
@@ -9,6 +12,8 @@ var reputation = require('../modules/reputation');
 var codeAdded = require('../modules/codeadded');
 var viewsnippet = require('../modules/viewsnippet');
 var commentAdded = require('../modules/commentadded');
+var flagsnippet =  require('../modules/flag');
+var users =  require('../modules/users');
 
 router.get("/",async function(req, res){
 
@@ -58,7 +63,37 @@ router.get("/frameworks",function(req, res){
   view.viewFrameworks(req,res)
 });
 
-router.get("/addcode",function(req, res){
+//Start of user related routes
+router.get("/myaccount",ensureLoggedIn(), function(req, res){
+  users.viewAccount(req,res)
+});
+
+router.get('/login', function(req, res) {
+  res.render('login', {user: req.user });
+});
+
+router.post('/login/password', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureMessage: true
+}));
+
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
+router.get('/newuser', function(req, res) {
+  res.render('signup',{user: req.user});
+});
+
+router.post('/users', function(req, res, next) {
+  users.add(req, res,next)
+});
+
+//End of user related routes
+
+router.get("/addcode",ensureLoggedIn(),function(req, res){
   res.render("addcode", {
     title: "Add CodeSnippets",
     user: req.user 
@@ -90,13 +125,43 @@ router.get("/progress", function(req, res){
 });
 
 router.get("/viewcode",function(req, res){
-  viewsnippet.viewSnippets(req,res)
-  
+  viewsnippet.viewSnippets(req,res);
+ 
+});
+
+router.post("/flagsnippet/:type/:id",function(req, res){
+  flagsnippet.flagSnippet(req, res);
+  // set all amounts to zero
+  /*let type = req.params.type;
+  let str = type.slice(0,-1) + '_id';
+  let str_id = type + `.` + str
+  let query = `UPDATE ${type} SET flagged=1 WHERE ${str_id}=?` ;
+         
+  // execute sql query
+  db.all(query,  [req.params.id],(err, result) => {
+      if (err) {
+          return console.log(err.message);
+      }
+      else {
+        res.render("viewcode", {
+          title: type,
+          user: req.user,
+          //dbsnippetresults: formattedSnippetResults
+        
+        });
+      }
+  });*/
 
 });
 
-router.get("/vote",function(req, res){
-  reputation.upvote(req, res);
-});
+router.post("/voted", function(req, res){
+
+  reputation.Upvote_ajax(req, res);
+})
+
+router.get("/voted-check", function(req, res){
+
+  reputation.CheckVote_ajax(req, res);
+})
 
 module.exports = router;
