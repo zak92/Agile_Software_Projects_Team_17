@@ -14,12 +14,12 @@
             
             
          
-          <%  dbsnippetresults.forEach(function(item){ %> 
+          <% dbsnippetresults.forEach(function(item){ %> 
           <div>
             <h2><%=item[0] %></h2>
           </div>
           <div>
-            <p>Contributed by <%=item[1] %></p>
+            <p >Contributed by <%=item[1] %></p>
           </div>
           <div>
             <p>Last updated: <%=item[3] %></p>
@@ -28,11 +28,8 @@
             <p><%=item[2] %></p>
           </div>
           <div>
-            
             <section><div id="code-snippet"><%=item[6] %></div></section>
           </div>
-          
-          <% }) %>
           
           <div class="snippet-rep">
             <div class="flag">
@@ -64,16 +61,42 @@
         3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 
         5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
       </svg> Share</button>
+      <br><br>
+          <h2>Comments</h2>
+          <div><%=item[7] %></div>
+          
+          <% }) %>
+      <br><br><br><br>
+
+        <div class='info'> 
+          <form action="/commentadded" method="post" >
+          <label for='message'>Type comment below!</label>
+          <br>
+          <% dbsnippetresults.forEach(function(item){ %> 
+          <input class='form-control' id ="comment" name='comment'>
+          <input type="hidden" class='form-control' id ="type" name='type' value="<%=type%>">
+          <input type="hidden" class='form-control' id ="title" name='title' value="<%=item[0] %>">
+          <input type="hidden" class='form-control' id ="username" name='username' value="<%=item[1] %>">
+          <input type="hidden" class='form-control' id ="description" name='description' value="<%=item[2] %>">
+          <input type="hidden" class='form-control' id ="last_update" name='last_update' value="<%=item[3] %>">
+          <input type="hidden" class='form-control' id ="code_snippet" name='code_snippet' value="<%=item[6] %>">
+          <input type="hidden" class='form-control' id ="comments" name='comments' value="<%=item[7] %>">
+          <% }) %>
+          <br>
+        <button id="sent" type='submit' class='btn btn-success'>Submit</button>
+      </form>
+      </div>
+      </div>
+
+      </div>
+
    
-      
-     
         </main>
-  
-  
   
         <%- include ("partials/footer.ejs") -%>
       </div>
     </div>
+
     <script>
       function CopyToClipboard(containerid) {
         if (document.selection) {
@@ -130,6 +153,8 @@
 
   
     </script>
+
+  
   </body>
 
 </html>

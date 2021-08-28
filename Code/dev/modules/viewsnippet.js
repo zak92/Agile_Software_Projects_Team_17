@@ -1,7 +1,6 @@
 var db = require('../db');
 
 module.exports.viewSnippets = async (req, res) => {
-         
     let type = req.query.type;
     let title = type + `.title`
     let description = type + `.description`
@@ -10,7 +9,8 @@ module.exports.viewSnippets = async (req, res) => {
     let flagged = type + `.flagged`
     let code_snippet = type + `.code_snippet`
     let str = type.slice(0,-1) + '_id';
-    let str_id = type + `.` + str
+    let str_id = type + `.` + str;
+    let comments = type + `.comments`
     
 
    
@@ -18,13 +18,11 @@ module.exports.viewSnippets = async (req, res) => {
 
     // get data that matches the unique id
     
-    let sql = `SELECT ${title}, users.username, ${description}, ${last_update}, ${upvotes}, ${flagged}, ${code_snippet}
+    let sql = `SELECT ${title}, users.username, ${description}, ${last_update}, ${upvotes}, ${flagged}, ${code_snippet}, ${comments}
               FROM ${type}
               INNER JOIN  users ON fk_user_id=users.user_id
               WHERE ${str_id}=?` ;  
     
-        
-      
     
         return new Promise(function(resolve,reject){
             db.all(sql , [req.query.id], function(err,rows){
@@ -47,6 +45,7 @@ module.exports.viewSnippets = async (req, res) => {
     res.render("viewcode", {
       title: "Code Snippets",
       user: req.user,
+      type: req.query.type,
       dbsnippetresults: formattedSnippetResults
     
     });

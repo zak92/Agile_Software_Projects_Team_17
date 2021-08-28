@@ -19,14 +19,27 @@
           <form action="/codeadded" method="post" class="needs-validation" novalidate>
             <fieldset>
               <div class="form-group">
-              <label class="mr-sm-2" for="category">Category</label>
+              <label class="mr-sm-2" for="category"></label>
               <!-- changing to text box because ejs not reading dropdown -->
-              <input type="text" class="form-control" name="category" id="type" placeholder="language, tool or framework" tabindex="1" required>
-              <div class="invalid-feedback">Please state if a language, tool, or framework</div>
+              <div class="invalid-feedback">Choose a valid category</div>
+              <label for="category">Choose a category:</label>
+              <select id="category" name="category">
+                <option value="language">Language</option>
+                <option value="tool">Tool</option>
+                <option value="framework">Framework</option>
+              </select>
             </div>
               <div class="form-group">
                 <label for="type" >Type of Language/Tool/Framework</label>
-                <input type="text" class="form-control" name="type" id="type" value="" tabindex="1" required>
+                <select id="type" name="type" required>
+                  <option value="javascript">javascript</option>
+                  <option value="python">python</option>
+                  <option value="c++">c++</option>
+                  <option value="git">git</option>
+                  <option value="bash">bash</option>
+                  <option value="nodeJS">nodeJS</option>
+                  <option value="django">django</option>
+                </select>
                 <div class="invalid-feedback">Please provide name of the language, tool, or framework</div>
             </div>
             <div class="form-group">

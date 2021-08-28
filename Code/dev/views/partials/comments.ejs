@@ -1,33 +1,34 @@
+
 <!doctype html>
 <html>
   <head>
-    <%- include ("partials/head.ejs") -%>
+    <%- include ("head.ejs") -%>
     <link rel="stylesheet" href="/css/viewcode.css">
   </head>
 
   <body>
     <div class="container-fluid">
       <div class="col-md-12 py-5 px-3 mx-auto">
-        <%- include ("partials/nav.ejs") -%>
+        <%- include ("nav.ejs") -%>
   
         <main class="container">
+            
           <div>
-            <h2>Your code has succesfully been added! </h2>
+            <h2><%=title %></h2>
           </div>
           <div>
-            <p><%= title %><% if(subtitle){ %>: <%=unescape(subtitle)%><% } %></p>
+            <p >Contributed by <%=username%></p>
           </div>
           <div>
-            <p>Contributed: <%= user %></p>
+            <p >Last updated <%=last_update%></p>
           </div>
           <div>
-            <p>Description: <%= description %></p>
+            <p ><%=description%></p>
           </div>
           <div>
-            <p>Code Snippet</p>
-            <section><div id="code-snippet"><%= code_snippet %></div></section>
+            <section><div id="code-snippet"><%=code_snippet%></div></section>
           </div>
-
+          
           <div class="snippet-rep">
             <div class="flag">
               <a href="#"><button type="button" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flag" viewBox="0 0 16 16">
@@ -58,16 +59,36 @@
         3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 
         5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
       </svg> Share</button>
+      <br><br>
+          <h2>Comments</h2>
+          <div><p><%=username%> : "<%=comments%>"</p></div>
+      <br><br><br><br>
+
+        <div class='info'> 
+          <form action="/commentadded" method="post" >
+          <label for='message'>Type comment below!</label>
+          <input class='form-control' id ="comment" name='comment'>
+          <input type="hidden" class='form-control' id ="type" name='type' value="<%=type%>">
+          <input type="hidden" class='form-control' id ="title" name='title' value="<%=title%>">
+          <input type="hidden" class='form-control' id ="username" name='username' value="<%=username%>">
+          <input type="hidden" class='form-control' id ="description" name='description' value="<%=description%>">
+          <input type="hidden" class='form-control' id ="last_update" name='last_update' value="<%=last_update%>">
+          <input type="hidden" class='form-control' id ="code_snippet" name='code_snippet' value="<%=code_snippet%>">
+          <input type="hidden" class='form-control' id ="comments" name='comments' value="<%=snippet_comments%>">
+          <br>
+        <button id="sent" type='submit' class='btn btn-success'>Submit</button>
+      </form>
       </div>
-        </main>   
-          <br> <br><br>
-          <div>
-          <b><p>View all <%=subtitle%> code snippets: </p></b><a href="/<%=subtitle%>"><button type="button" class="btn btn-primary mr-3"><%=subtitle%> </button></a>
-        </div>
+      </div>
+
+      </div>
+
         </main>
-        <%- include ("partials/footer.ejs") -%>
+  
+        <%- include ("footer.ejs") -%>
       </div>
     </div>
+
     <script>
       function CopyToClipboard(containerid) {
         if (document.selection) {
@@ -81,7 +102,7 @@
             range.selectNode(document.getElementById(containerid));
             window.getSelection().addRange(range);
             document.execCommand("copy");
-            alert("Text has been copied")
+            alert("Code snippet has been copied")
         }
       }
     
@@ -109,10 +130,29 @@
           newLink.click(); 
       
       }
+
+      if (navigator.share) {
+        const section = document.querySelector("section");
+      }
+
+      window.doSharing = (el) => {
+        navigator.share({
+
+        text: el.parentNode.querySelector("div").innerText
+        
+        });
+      };
+
   
     </script>
+
+  
   </body>
 
 </html>
 
 
+
+
+
+  

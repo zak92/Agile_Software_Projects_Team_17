@@ -8,6 +8,7 @@ var view = require('../modules/view');
 var reputation = require('../modules/reputation');
 var codeAdded = require('../modules/codeadded');
 var viewsnippet = require('../modules/viewsnippet');
+var commentAdded = require('../modules/commentadded');
 
 router.get("/",async function(req, res){
 
@@ -68,6 +69,10 @@ router.post("/codeadded", function(req, res){
   codeAdded.insertLang(req,res);
   codeAdded.insertTools(req,res);
   codeAdded.insertFrameworks(req,res);
+});
+
+router.post("/commentadded", function(req, res){ 
+  commentAdded.insertComment(req,res);
 });
 
 router.get("/search", function(req, res){ 
