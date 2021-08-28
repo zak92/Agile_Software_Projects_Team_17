@@ -26,6 +26,7 @@
           <div>
             <p><%=item[2] %></p>
             <p>Votes: <%=item[4] %></p> 
+
             <% if (item[5]==1) { %>
             <p style="color:red"><strong>This code snippet has been flagged for review!</strong></p>
             <% }%>
@@ -51,12 +52,9 @@
                     <input class="btn btn-danger " type="submit" value="Flag(Need to log in)" disabled>
                 </form>
                   <%} %>
-              
-              <% }) %>
-            
+    
             <div class="vote">
               <a href="#"><button class="btn btn-dark" id="btn-voted" onclick="VoteBtnOnClick()">Vote</button></a>
-
             </div>
             
           </div>
@@ -78,13 +76,14 @@
         3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 
         5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
       </svg> Share</button>
+    </div>
       <br><br>
+      <div>
           <h2>Comments</h2>
-          <div><%=item[7] %></div>
-          
+          <div><%=item[8] %></div>
           <% }) %>
-      <br><br><br><br>
-
+      <br><br>
+    </div>
         <div class='info'> 
           <form action="/commentadded" method="post" >
           <label for='message'>Type comment below!</label>
