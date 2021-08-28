@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS languages (
         flagged INTEGER,
         last_update TEXT,
         FOREIGN KEY (fk_user_id) REFERENCES users (user_id));
-
+            
 INSERT INTO tools (fk_user_id, tool, title, description, code_snippet, tags, upvotes, flagged, last_update)
     VALUES ("1", "git", "git init", "creates a new Git repository","git init", "CLI, Commands", 0, 0, CURRENT_TIMESTAMP),
     ("1", "git", "git pull", "used to fetch and download content from a remote repository and immediately update the local repository to match that content","git pull", "CLI, Commands", 0, 0, CURRENT_TIMESTAMP),
@@ -79,4 +79,6 @@ INSERT INTO languages (fk_user_id, language, title, description, code_snippet, t
     merged_dict = {**dictionary1, **dictionary2}
     
     print('Merged dictionary:', merged_dict)', 'python, datatype, dictionary, common function', 0, 0, CURRENT_TIMESTAMP);
+
+
     
