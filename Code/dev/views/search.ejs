@@ -50,6 +50,13 @@
             />
             <label class="form-check-label" for="inlineCheckbox3">tools</label>
           </div>
+          <div class="col-lg-2 px-0 mt-2">
+            <% if (user) { %>
+            <a href="/addcode"
+              ><button class="btn btn-primary">Add code snippet</button></a
+            >
+            <% } %>
+          </div>
         </div>
 
         <% if (message) { %>

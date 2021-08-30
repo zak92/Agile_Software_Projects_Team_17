@@ -73,7 +73,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login/password', passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/addcode',
   failureRedirect: '/login',
   failureMessage: true
 }));
