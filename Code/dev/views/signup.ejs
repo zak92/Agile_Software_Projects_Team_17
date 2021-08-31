@@ -23,13 +23,13 @@
 
                 <form action="/users" method="post">
                   <input type="text" name="name" placeholder="Name" class="form-control mb-3">
-                  <input type="text" name="username" placeholder="Username" class="form-control mb-3">
+                  <input type="text" name="username" placeholder="Username" class="form-control mb-3" required>
                   <input type="email" name="email" placeholder="Email" class="form-control mb-3">
                   <div class="form-check form-check-inline mb-3">
                     <input type="radio" name="is_admin" value="1" class="form-check-input" id="is_admin">
                     <label class="form-check-label" for="is_admin">User is an admin</label>
                   </div>
-                  <input type="password" name="password" placeholder="Password" class="form-control mb-3">
+                  <input type="password" name="password" placeholder="Password" class="form-control mb-3" required>
                   <button type="submit" class="btn btn-dark">Sign up</button>
                 </form>
               </div>
