@@ -59,7 +59,7 @@ module.exports.viewTools = async (req, res) => {
 
     async function tools(){
         
-        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.tool, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes, tbl_1.tool_id  FROM tools tbl_1 INNER JOIN users ON fk_user_id = users.user_id `;
+        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.tool, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes, tbl_1.tool_id, tbl_1.comments FROM tools tbl_1 INNER JOIN users ON fk_user_id = users.user_id `;
         if(req.user){
 
           //sql_sub1 : This table is to select records related to the currently logged in user.
@@ -112,7 +112,7 @@ module.exports.viewFrameworks = async (req, res) => {
 
     async function frameworks(){
         
-        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.framework, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes, tbl_1.framework_id  FROM frameworks tbl_1 INNER JOIN users ON fk_user_id = users.user_id `;
+        let sql = `SELECT users.username, tbl_1.fk_user_id, tbl_1.framework, tbl_1.title, tbl_1.description, tbl_1.code_snippet, tbl_1.tags, tbl_1.upvotes, tbl_1.framework_id, tbl_1.comments  FROM frameworks tbl_1 INNER JOIN users ON fk_user_id = users.user_id `;
         //users.username, frameworks.fk_user_id, frameworks.framework, frameworks.title 
 
         if(req.user){

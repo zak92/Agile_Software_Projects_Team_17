@@ -6,7 +6,6 @@ module.exports.Upvote_ajax = async (req, res) => {
     try{
         //Check login status
         if(req.user){
-
             let post_type = req.body.type;
             let post_id = req.body.id;
             let user_id = req.user.id;
@@ -45,14 +44,14 @@ module.exports.CheckVote_ajax = async(req,res) => {
     try{
         //Check login status
         if(req.user){
-
-            let post_type = req.body.type;
-            let post_id = req.body.id;
+            console.log(req.query);
+            let post_type = req.query.type;
+            let post_id = req.query.id;
             let user_id = req.user.id;
-
+            console.log(post_type);
+            console.log(post_id);
             //Prevent users from using the get method to vote maliciously, so need to check the table "vote".
             let VoteExist = await reputation.CheckVote(post_type, post_id, user_id);
-
             //If VoteExist is true, the same record exists in the database.
             if(VoteExist){
                 res.send('VoteExisted');
