@@ -20,6 +20,11 @@
           
           <h2 class="text-align-center"><%= title %><% if(subtitle){ %>: <%=unescape(subtitle)%><% } %></h2>
           <p class="lead">All code snippets</p>
+          
+          <% if (dbresults == '') { %>
+            <p class = 'lead'>no code snippet added yet! Start contributing!</p>
+            <% } else {%>
+
           Tags:
           <%  tags.forEach(function(item){ %> 
             <label><%=item%></label>
@@ -54,7 +59,7 @@
               <% }) %>
             </tbody>
           </table>
-
+          
           <div class="row">
             <div class="col-md-12">
               <ul class="pagination justify-content-center pagination-sm" >
@@ -140,7 +145,7 @@
               </ul>
             </div>
           </div>
-
+          <% } %>
         </div>
       </div>
   
